@@ -35,38 +35,24 @@ class Taxi extends View {
 
     }
 
-    public Taxi(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init();
-    }
-
-    public Taxi(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init();
-    }
-
-    public Taxi(Context context) {
-        super(context);
-        init();
-    }
-
+    //画像読み込みfrom SampleView  書き換え必要(constructor)
     private void init() {
-        //画像読み込み
-        Resources res = this.getContext().getResources();
+
+//        Resources res = this.getContext().getResources();
         taxi = BitmapFactory.decodeResource(res, R.drawable.ic_launcher);
         width = taxi.getWidth();
         height = taxi.getHeight();
     }
 
-    int r = new java.util.Random().nextInt(4);
+//    int r = new java.util.Random().nextInt(4);
     int playerX = lane[r];
 
-    @Override
-    public void onDraw(Canvas c) {
+//    @Override
+//    public void onDraw(Canvas c) {
 
         //数値処理
         playerY += playerVY;
-
+/*
         //上まで行ったら下に戻る動き
         if (playerY < 0) {
             playerY = viewHeight;
@@ -81,7 +67,7 @@ class Taxi extends View {
         postInvalidateDelayed(50);
 
     }
-
+*/
     //以下タッチイベントですがエラーです
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
