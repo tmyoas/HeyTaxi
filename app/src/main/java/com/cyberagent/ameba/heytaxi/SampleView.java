@@ -1,15 +1,12 @@
-package com.example.misa0429.myapplication;
+package com.cyberagent.ameba.heytaxi;
 
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 
 /**
  * Created by misa0429 on 2014/09/11.
@@ -19,8 +16,8 @@ class SampleView extends View {
     int playerY;  //スタートのY座標
     int playerVY = -10;  //上に10ずつ動く
     Bitmap taxi;
-    int width; //タクシーの画像の幅
-    int height; //タクシーの画像の高さ
+//    int width; //タクシーの画像の幅
+//    int height; //タクシーの画像の高さ
     int viewWidth; //画面の幅
     int viewHeight; //画面の高さ
 
@@ -56,9 +53,9 @@ class SampleView extends View {
     private void init() {
         //画像読み込み
         Resources res = this.getContext().getResources();
-        taxi = BitmapFactory.decodeResource(res, R.drawable.ic_launcher);
-        width = taxi.getWidth();
-        height = taxi.getHeight();
+//        taxi = BitmapFactory.decodeResource(res, R.drawable.ic_launcher);
+//        width = taxi.getWidth();
+//        height = taxi.getHeight();
     }
 
     int r = new java.util.Random ().nextInt (4);
