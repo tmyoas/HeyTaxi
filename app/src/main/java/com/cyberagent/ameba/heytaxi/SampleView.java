@@ -1,4 +1,4 @@
-package com.example.misa0429.myapplication;
+package com.cyberagent.ameba.heytaxi;
 
 import android.content.Context;
 import android.content.res.Resources;

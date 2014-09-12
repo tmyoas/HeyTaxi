@@ -1,4 +1,4 @@
-package com.example.misa0429.myapplication;
+package com.cyberagent.ameba.heytaxi;
 
 
 import android.content.Context;
@@ -36,52 +36,37 @@ class Taxi extends View {
 
     }
 
-    public Taxi(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init();
-    }
-
-    public Taxi(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init();
-    }
-
-    public Taxi(Context context) {
-        super(context);
-        init();
-    }
-
     private void init() {
-        //画像読み込み
+        //画像読み込み(constructor)
         Resources res = this.getContext().getResources();
         taxi = BitmapFactory.decodeResource(res, R.drawable.ic_launcher);
         width = taxi.getWidth();
         height = taxi.getHeight();
     }
 
-    int r = new java.util.Random().nextInt(4);
+//    int r = new java.util.Random().nextInt(4);
     int playerX = lane[r];
 
-    @Override
-    public void onDraw(Canvas c) {
+//    @Override
+//    public void onDraw(Canvas c) {
 
         //数値処理
         playerY += playerVY;
 
         //上まで行ったら下に戻る動き
-        if (playerY < 0) {
-            playerY = viewHeight;
-            r = new java.util.Random().nextInt(4);
-            playerX = lane[r];
+//        if (playerY < 0) {
+//            playerY = viewHeight;
+//            r = new java.util.Random().nextInt(4);
+//            playerX = lane[r];
         }
         //描画処理
-        c.drawBitmap(taxi, playerX, playerY, paint);
+//        c.drawBitmap(taxi, playerX, playerY, paint);
 
 
         // ループ処理、スピードの調整（ミリ秒）
-        postInvalidateDelayed(50);
+//        postInvalidateDelayed(50);
 
-    }
+//    }
 
     //以下タッチイベントですがエラーです
     @Override
@@ -97,7 +82,6 @@ class Taxi extends View {
                   //  touch_count += 1;
 //                    taxi = BitmapFactory.decodeResource(res, R.drawable.ic_launcher_reverse);
                     playerVY = 0;
-
                     //playerVY = -1920;
                     break;
                 case MotionEvent.ACTION_MOVE:
