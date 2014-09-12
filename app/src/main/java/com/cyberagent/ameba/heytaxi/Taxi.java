@@ -36,9 +36,16 @@ class Taxi extends View {
 
     }
 
+<<<<<<< HEAD
     private void init() {
         //画像読み込み(constructor)
         Resources res = this.getContext().getResources();
+=======
+    //画像読み込みfrom SampleView  書き換え必要(constructor)
+    private void init() {
+
+//        Resources res = this.getContext().getResources();
+>>>>>>> ec76a78609a1e723f71b916980bd3c4c271aa948
         taxi = BitmapFactory.decodeResource(res, R.drawable.ic_launcher);
         width = taxi.getWidth();
         height = taxi.getHeight();
@@ -52,7 +59,7 @@ class Taxi extends View {
 
         //数値処理
         playerY += playerVY;
-
+/*
         //上まで行ったら下に戻る動き
 //        if (playerY < 0) {
 //            playerY = viewHeight;
@@ -66,8 +73,13 @@ class Taxi extends View {
         // ループ処理、スピードの調整（ミリ秒）
 //        postInvalidateDelayed(50);
 
+<<<<<<< HEAD
 //    }
 
+=======
+    }
+*/
+>>>>>>> ec76a78609a1e723f71b916980bd3c4c271aa948
     //以下タッチイベントですがエラーです
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
