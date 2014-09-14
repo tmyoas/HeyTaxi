@@ -56,13 +56,17 @@ class SampleView extends View {
     private void init() {
         //画像読み込み
         Resources res = this.getContext().getResources();
-//        taxi = BitmapFactory.decodeResource(res, R.drawable.ic_launcher);
+        taxi = BitmapFactory.decodeResource(res, R.drawable.ic_launcher);
 //        width = taxi.getWidth();
 //        height = taxi.getHeight();
+
     }
 
     int r = new java.util.Random ().nextInt (5);
     int playerX = lane[r];
+
+
+    Taxi taxi1 = new Taxi (r);
 
     @Override
     public void onDraw(Canvas c) {

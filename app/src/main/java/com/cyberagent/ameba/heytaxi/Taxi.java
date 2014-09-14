@@ -12,7 +12,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-class Taxi extends View {
+public class Taxi {
     Paint paint = new Paint();
     int playerY;  //スタートのY座標
     int playerVY = -10;  //上に10ずつ動く
@@ -26,15 +26,19 @@ class Taxi extends View {
     int[] lane = new int[]{0, 216, 432, 648, 846};
 
 
-    @Override
-    public void onWindowFocusChanged(boolean hasWindowFocus) {
-        super.onWindowFocusChanged(hasWindowFocus);
+//    Taxi (r){
+//
+//    }
+
+//    @Override
+//    public void onWindowFocusChanged(boolean hasWindowFocus) {
+//        super.onWindowFocusChanged(hasWindowFocus);
         viewWidth = getWidth();
         viewHeight = getHeight();
 
         playerY = viewHeight;
 
-    }
+//    }
 
     //画像読み込みfrom SampleView  書き換え必要(constructor)
     private void init() {
