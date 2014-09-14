@@ -14,7 +14,7 @@ import android.widget.ImageView;
 /**
  * Created by misa0429 on 2014/09/11.
  */
-class SampleView extends View {
+class SampleView  {
     Paint paint = new Paint();
     int playerY;  //スタートのY座標
     int playerVY = -10;  //上に10ずつ動く
@@ -23,6 +23,8 @@ class SampleView extends View {
 //    int height; //タクシーの画像の高さ
     int viewWidth; //画面の幅
     int viewHeight; //画面の高さ
+
+    int r = new java.util.Random ().nextInt (5);;
 
     //5つのレーンのX座標
     int[] lane = new int[]{0, 216, 432, 648, 846};
@@ -38,30 +40,34 @@ class SampleView extends View {
 
 //    }
 
-    public SampleView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init();
-    }
+//    public SampleView() {
+//        super();
+//        init();
+//        r = new java.util.Random ().nextInt (5);
+//    }
 
-    public SampleView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init();
-    }
+//    public SampleView() {
+//        super();
+//        init();
+//        r = new java.util.Random ().nextInt (5);
+//    }
+//
+//    public SampleView(Taxi context) {
+//        super(context);
+//        init();
+//        int r;
+//        r = new java.util.Random ().nextInt (5);
+//    }
 
-    public SampleView(Context context) {
-        super(context);
-        init();
-    }
-
-    private void init() {
-        //画像読み込み
-        Resources res = this.getContext().getResources();
+//    private void init() {
+//        画像読み込み
+//        Resources res = this.getContext().getResources();
 //        taxi = BitmapFactory.decodeResource(res, R.drawable.ic_launcher);
 //        width = taxi.getWidth();
 //        height = taxi.getHeight();
-    }
+//    }
 
-    int r = new java.util.Random ().nextInt (5);
+
     int playerX = lane[r];
 
     @Override
@@ -73,14 +79,16 @@ class SampleView extends View {
         //上まで行ったら下に戻る動き
        if(playerY < 0) {
            playerY = viewHeight;
-           r = new java.util.Random ().nextInt (4);
+           r = new java.util.Random ().nextInt (5);
            playerX = lane[r];
        }
         //描画処理
         c.drawBitmap (taxi, playerX, playerY, paint);
 
         // ループ処理、スピードの調整（ミリ秒）
-            postInvalidateDelayed(50);
-
+//            postInvalidateDelayed(50);
+//
     }
+
+
 }

@@ -12,11 +12,14 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-class Taxi extends View {
+import static android.view.MotionEvent.ACTION_DOWN;
+
+public class Taxi extends SampleView{
+    Resources res;
     Paint paint = new Paint();
     int playerY;  //スタートのY座標
     int playerVY = -10;  //上に10ずつ動く
-    Bitmap taxi;
+    private Bitmap taxi;
     int width; //タクシーの画像の幅
     int height; //タクシーの画像の高さ
     int viewWidth; //画面の幅
@@ -24,47 +27,58 @@ class Taxi extends View {
 
     //5つのレーンのX座標
     int[] lane = new int[]{0, 216, 432, 648, 846};
-
-
-    @Override
-    public void onWindowFocusChanged(boolean hasWindowFocus) {
-        super.onWindowFocusChanged(hasWindowFocus);
-        viewWidth = getWidth();
-        viewHeight = getHeight();
-
-        playerY = viewHeight;
-
-    }
-
-<<<<<<< HEAD
-    private void init() {
-        //画像読み込み(constructor)
-        Resources res = this.getContext().getResources();
-=======
-    //画像読み込みfrom SampleView  書き換え必要(constructor)
-    private void init() {
-
-//        Resources res = this.getContext().getResources();
->>>>>>> ec76a78609a1e723f71b916980bd3c4c271aa948
+    //コンストラクタ(画像の呼び出し)
+    public  Taxi(Context context){
         taxi = BitmapFactory.decodeResource(res, R.drawable.ic_launcher);
         width = taxi.getWidth();
         height = taxi.getHeight();
     }
 
-//    int r = new java.util.Random().nextInt(4);
-    int playerX = lane[r];
+
+//
+//    Taxi(Resources res){
+//        taxi = BitmapFactory.decodeResource(res, R.drawable.ic_launcher);
+//        width = taxi.getWidth();
+//        height = taxi.getHeight();
+//    }
+    //数値処理
+    playerY = public int getHeight() {
+        return height;
+    }
+
+//    ght;
+//    playerY += playerVY;
 
 //    @Override
-//    public void onDraw(Canvas c) {
+//    public void onWindowFocusChanged(boolean hasWindowFocus) {
+//        super.onWindowFocusChanged(hasWindowFocus);
+//        viewWidth = getWidth();
+//        viewHeight = getHeight();
+//        playerY = viewHeight;
+//    }
 
+//    private void init() {
+//        //画像読み込み(constructor)
+//        Resources res = this.getContext().getResources();
+
+    //画像読み込みfrom SampleView  書き換え必要(constructor)
+//        Resources res = this.getContext().getResources();
+        //画像の定義
+//        taxi = BitmapFactory.decodeResource( getResources(), R.drawable.ic_launcher );
+//        width = taxi.getWidth();
+//        height = taxi.getHeight();
+
+//    int r = new java.util.Random().nextInt(4);
+    @Override
+    public void onDraw(Canvas c) {
         //数値処理
         playerY += playerVY;
-/*
+
         //上まで行ったら下に戻る動き
-//        if (playerY < 0) {
-//            playerY = viewHeight;
-//            r = new java.util.Random().nextInt(4);
-//            playerX = lane[r];
+        if (playerY < 0) {
+            playerY = viewHeight;
+            r = new java.util.Random().nextInt(5);
+            playerX = lane[r];
         }
         //描画処理
 //        c.drawBitmap(taxi, playerX, playerY, paint);
@@ -73,19 +87,21 @@ class Taxi extends View {
         // ループ処理、スピードの調整（ミリ秒）
 //        postInvalidateDelayed(50);
 
-<<<<<<< HEAD
 //    }
 
-=======
     }
-*/
->>>>>>> ec76a78609a1e723f71b916980bd3c4c271aa948
     //以下タッチイベントですがエラーです
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
+
+        SampleView r = new SampleView();
+        int playerX;
         float x = ev.getX();
         float y = ev.getY();
         String action = "";
+
+        playerX = lane[r];
+
 
         if (viewWidth / 2 - width / 2 <= x && x <= viewWidth / 2 + width / 2 && playerY <= y && y <= playerY + viewHeight) {
             switch (ev.getAction() & MotionEvent.ACTION_MASK) {
