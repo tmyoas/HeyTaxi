@@ -7,8 +7,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.view.View;
-
+import android.util.Log;import android.view.View;
+import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -17,28 +17,32 @@ import java.util.Random;
  */
 class SampleView extends View {
     Paint paint = new Paint();
+
     int dispX = 720; //画面幅
     int dispY = 1280;  //画面高さ
 
     Resources res;
     int playerX; //タクシー位置x方向
     int playerY; //タクシー位置y方向
-    int playerVY = -10;  //上に10ずつ動く
 
+    int playerVY = -10;  //上に10ずつ動く
+    Bitmap taxi;//    int width; //タクシーの画像の幅//    int height; //タクシーの画像の高さ    int viewWidth; //画面の幅    int viewHeight; //画面の高さ
     Bitmap testtaxi;
     long fps = 20; //fps
 
     //5つのレーンのX座標
+
 //    int[] lane = new int[5];
 //    int[]lane = new int[]{0, dispX / 5, 2 * dispX / 5, 3 * dispX / 5, 4 * dispX / 5};
 
     //resをTaxiに渡そうとすると問題を起こしてアプリが終了します なんでだ
 //    Taxi taxi = new Taxi(res, lane[r], playerVY);
 
-    //複数のタクシー管理
+
+//        playerY = viewHeight;    //複数のタクシー管理
     ArrayList<Taxi> taxies = new ArrayList<Taxi>();
 
-    @Override
+//    }    @Override
     public void onWindowFocusChanged(boolean hasWindowFocus) {
         super.onWindowFocusChanged(hasWindowFocus);
     }
@@ -58,6 +62,15 @@ class SampleView extends View {
         init();
     }
 
+//    private void init() {
+        //画像読み込み
+//        Resources res = this.getContext().getResources();
+//        taxi = BitmapFactory.decodeResource(res, R.drawable.ic_launcher);
+//    public SampleView(Context context) {
+//        super(context);
+//        init();
+//    }
+
     private void init() {
         //画像読み込み
 
@@ -75,9 +88,13 @@ class SampleView extends View {
 
     }
 
+//    int r = new java.util.Random ().nextInt (5);
+//    int playerX = lane[r];
+
     @Override
     public void onDraw(Canvas c) {
 
+        //数値処理//        playerY += playerVY;
         for (int i = 0; i < taxies.size(); i++) {
             Taxi taxi = taxies.get(i);
             //数値処理
@@ -91,9 +108,9 @@ class SampleView extends View {
 //        }
             //描画処理
             c.drawBitmap(testtaxi, taxi.playerX, taxi.playerY, paint);
-        }
 
         // ループ処理、スピードの調整（ミリ秒）
+//            postInvalidateDelayed(50);
         //1000msに20回更新 => 50msごとに更新
         postInvalidateDelayed(1000 / fps);
 

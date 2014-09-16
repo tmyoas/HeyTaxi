@@ -1,38 +1,92 @@
 package com.cyberagent.ameba.heytaxi;
 
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import static android.view.MotionEvent.ACTION_DOWN;
 
 class Taxi {
 
+    //class Taxi {
+
     Paint paint = new Paint();
+    //スタートのY座標    int playerVY = -10;  //上に10ずつ動く
     int playerX; //スタートのx座標
     int playerY= 1920;  //スタートのY座標
     int playerVY;  //y方向移動量
     Bitmap taxi;
+    Resources res;
     int width; //タクシーの画像の幅
     int height; //タクシーの画像の高さ
     int viewWidth; //画面の幅
     int viewHeight; //画面の高さ
+    int dispX = 1080; //画面幅
+    int lane ;
 
-    //コンストラクタ
-    Taxi (Resources res, int playerX, int playerVY) {
-        this.taxi = BitmapFactory.decodeResource(res, R.drawable.ic_launcher);
-        this.width = taxi.getWidth();
-        this.height = taxi.getHeight();
-        this.playerX = playerX;
-        this.playerVY = playerVY;
+        //コンストラクタ
+        Taxi(Resources res, int playerX, int playerVY ){
+            this.taxi = BitmapFactory.decodeResource(res, R.drawable.ic_launcher);
+            this.width = taxi.getWidth();
+            this.height = taxi.getHeight();
+            this.playerX = playerX;
+            this.playerVY = playerVY;
+        }
+
+
+            //画像読み込みfrom SampleView  書き換え必要(constructor)
+//        private void init () {
+
+//        Resources res = this.getContext().getResources();
+//            taxi = BitmapFactory.decodeResource(res, R.drawable.ic_launcher);
+//            width = taxi.getWidth();
+//            height = taxi.getHeight();
+//        }
+       Taxi( int lane, int playerVY){
+            this.lane = lane;
+            this.playerX = lane * dispX / 5;
+            this.playerVY = playerVY;
+        }
+
+
+
+//    int r = new java.util.Random().nextInt(4);
+//        int playerX = lane[r];
+
+//    @Override
+//    public void onDraw(Canvas c) {
+//
+//        数値処理
+//        playerY += playerVY;
+/*
+        //上まで行ったら下に戻る動き
+        if (playerY < 0) {
+            playerY = viewHeight;
+            r = new java.util.Random().nextInt(4);
+            playerX = lane[r];
+        }
+        //描画処理
+        c.drawBitmap(taxi, playerX, playerY, paint);
+//
+
+        // ループ処理、スピードの調整（ミリ秒）
+        postInvalidateDelayed(50);
+
     }
-
-    Taxi (int playerX, int playerVY) {
-        this.playerX = playerX;
-        this.playerVY = playerVY;
-    }
-
-    //以下タッチイベントですがエラーです
+*/
+        //以下タッチイベントですがエラーです
+//        @Override
+//        public boolean onTouchEvent (MotionEvent ev){
+//            float x = ev.getX();
+//            float y = ev.getY();
+//            String action = "";
 ////    @Override
 //    public boolean TouchEvent(MotionEvent ev) {
 //        float x = ev.getX();
@@ -63,8 +117,6 @@ class Taxi {
 //           // Log.d("TAG", "action : " + action + " count : " + touch_count);
 //        } else {
 //        }
-//        return true;
-//    }
 
-
-}
+//        return true;}
+    }
