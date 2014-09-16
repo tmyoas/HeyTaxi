@@ -1,11 +1,18 @@
 package com.cyberagent.ameba.heytaxi;
 
 import android.app.Activity;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 
 public class MainActivity extends Activity {
@@ -19,7 +26,6 @@ public class MainActivity extends Activity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(new SampleView(this));
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
