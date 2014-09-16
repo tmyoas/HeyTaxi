@@ -15,7 +15,7 @@ public class CountDownGameOver {
 
     //タクシーがタッチされないまま画面上端に到達したときの処理
     public boolean touchline(int lane){
-
+        //呼び出されたとき対応したlaneの残り台数を減らす
         count_over[lane] -= 1;
 
         //ゲーム終了の判定
@@ -27,6 +27,7 @@ public class CountDownGameOver {
             default:
                 gameend = false;
         }
+        //残り台数が0の時true、それ以外の時falseを返す
         return gameend;
     }
 }
