@@ -28,6 +28,9 @@ class SampleView extends View {
     Bitmap testtaxi;
     long fps = 20; //fps
 
+    CountDownGameOver count_over = new CountDownGameOver();
+    boolean detect_over;
+
     //5つのレーンのX座標
 //    int[] lane = new int[5];
     int[]lane = new int[]{0, dispX / 5, 2 * dispX / 5, 3 * dispX / 5, 4 * dispX / 5};
@@ -68,7 +71,7 @@ class SampleView extends View {
     private void init() {
         //画像読み込み
         res = this.getContext().getResources();
-        testtaxi = BitmapFactory.decodeResource(res, R.drawable.ic_launcher);
+        testtaxi = BitmapFactory.decodeResource(res, R.drawable.taxi_default);
 //        width = taxi.getWidth();
 //        height = taxi.getHeight();
 
@@ -95,6 +98,7 @@ class SampleView extends View {
 //        }
             //描画処理
             c.drawBitmap(testtaxi, taxi.playerX, taxi.playerY, paint);
+
         }
 
         // ループ処理、スピードの調整（ミリ秒）

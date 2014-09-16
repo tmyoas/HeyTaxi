@@ -9,7 +9,7 @@ import android.graphics.Paint;
 class Taxi {
     Paint paint = new Paint();
     int playerX; //スタートのx座標
-    int playerY= 1920;  //スタートのY座標
+    int playerY = 1920;  //スタートのY座標
     int playerVY;  //y方向移動量
     Bitmap taxi;
     int width; //タクシーの画像の幅
