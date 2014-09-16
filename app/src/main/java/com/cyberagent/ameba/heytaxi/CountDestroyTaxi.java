@@ -8,12 +8,12 @@ package com.cyberagent.ameba.heytaxi;
 
 public class CountDestroyTaxi{
 
-    int count_destroy;
+    int count_destroy = 0;
 
     //コンストラクタ
-    CountDestroyTaxi () {
-        count_destroy = 0;
-    }
+//    CountDestroyTaxi () {
+//        count_destroy = 0;
+//    }
 
     //呼び出してカウント
     void increment() {

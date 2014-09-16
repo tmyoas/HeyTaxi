@@ -1,17 +1,10 @@
 package com.cyberagent.ameba.heytaxi;
 
 
-import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.util.AttributeSet;
-import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
-import static android.view.MotionEvent.ACTION_DOWN;
 
 class Taxi {
 
@@ -20,7 +13,7 @@ class Taxi {
     Paint paint = new Paint();
     //スタートのY座標    int playerVY = -10;  //上に10ずつ動く
     int playerX; //スタートのx座標
-    int playerY = 1920;  //スタートのY座標
+    int playerY = 1280;  //スタートのY座標
     int playerVY;  //y方向移動量
     Bitmap taxi;
     Resources res;
@@ -51,7 +44,7 @@ class Taxi {
 //        }
        Taxi( int lane, int playerVY){
             this.lane = lane;
-            this.playerX = lane * dispX / 5;
+            this.playerX = 10 + lane * 142;
             this.playerVY = playerVY;
         }
 

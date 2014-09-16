@@ -7,8 +7,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;import android.view.View;
-import android.widget.ImageView;
+import android.view.View;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -22,21 +22,17 @@ class SampleView extends View {
     int dispY = 1280;  //画面高さ
 
     Resources res;
-    int playerX; //タクシー位置x方向
     int playerY; //タクシー位置y方向
 
     int playerVY = -10;  //上に10ずつ動く
-    Bitmap taxi;//    int width; //タクシーの画像の幅//    int height; //タクシーの画像の高さ    int viewWidth; //画面の幅    int viewHeight; //画面の高さ
     Bitmap testtaxi;
+    Bitmap background;
     long fps = 20; //fps
 
     CountDownGameOver count_over = new CountDownGameOver();
     boolean detect_over;
 
     //5つのレーンのX座標
-
-//    int[] lane = new int[5];
-//    int[]lane = new int[]{0, dispX / 5, 2 * dispX / 5, 3 * dispX / 5, 4 * dispX / 5};
 
     //resをTaxiに渡そうとすると問題を起こしてアプリが終了します なんでだ
 //    Taxi taxi = new Taxi(res, lane[r], playerVY);
@@ -79,12 +75,10 @@ class SampleView extends View {
 
         res = this.getContext().getResources();
         testtaxi = BitmapFactory.decodeResource(res, R.drawable.taxi_default);
-//        width = taxi.getWidth();
-//        height = taxi.getHeight();
+        background = BitmapFactory.decodeResource(res, R.drawable.background);
 
             int speed = new java.util.Random().nextInt(40);
             playerVY = - speed;
-
 
         makeTaxi(playerVY);
 
@@ -96,6 +90,7 @@ class SampleView extends View {
 
     @Override
     public void onDraw(Canvas c) {
+        c.drawBitmap(background, 0, 0, paint);
 
         //数値処理//        playerY += playerVY;
         for (int i = 0; i < taxies.size(); i++) {
@@ -111,11 +106,21 @@ class SampleView extends View {
 //        }
             //描画処理
             c.drawBitmap(testtaxi, taxi.playerX, taxi.playerY, paint);
-<<<<<<< HEAD
 
+            //死亡判定(仮)
+            if (taxi.playerY < 300) {
+
+                detect_over = count_over.touchline(taxi.lane);
+//                Log.v("CHECK", "count_over[i] : " + count_over.count_over[i]);
+                if (detect_over){
+                    //残り0(ゲームが終わる)になったときの処理
+//                    Log.v("CHECK", "GameEnd");
+                }else{
+                    //それ以外(まだゲームが続く)のときの処理
+//                    Log.v("CHECK", "Continue");
+                }
+            }
         }
-=======
->>>>>>> 3d4b80e6a9f31a257392146bb524caa047d4e9b8
 
         // ループ処理、スピードの調整（ミリ秒）
 //            postInvalidateDelayed(50);
