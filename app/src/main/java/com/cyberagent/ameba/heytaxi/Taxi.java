@@ -14,7 +14,9 @@ import android.view.View;
 import static android.view.MotionEvent.ACTION_DOWN;
 
 class Taxi {
+
     //class Taxi {
+
     Paint paint = new Paint();
     //スタートのY座標    int playerVY = -10;  //上に10ずつ動く
     int playerX; //スタートのx座標
