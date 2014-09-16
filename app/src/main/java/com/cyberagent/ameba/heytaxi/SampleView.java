@@ -7,7 +7,9 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;import android.view.View;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.Random;
@@ -39,7 +41,7 @@ class SampleView extends View {
 
     //resをTaxiに渡そうとすると問題を起こしてアプリが終了します なんでだ
 //    Taxi taxi = new Taxi(res, lane[r], playerVY);
-    Taxi taxi0 = new Taxi(lane[new Random().nextInt(5)], playerVY);
+    Taxi taxi0 = new Taxi(lane[new Random().nextInt(5)], playerVY) ;
 //    @Override//    public void onWindowFocusChanged(boolean hasWindowFocus) {//        super.onWindowFocusChanged(hasWindowFocus);//        viewWidth = getWidth();//        viewHeight = getHeight();    // タクシーを作る(&消す)メソッドもしくはクラスが必要
 //    Taxi taxi1 = new Taxi(lane[new Random().nextInt(5)], playerVY-2);
 //    Taxi taxi2 = new Taxi(lane[new Random().nextInt(5)], playerVY-4);
@@ -86,7 +88,12 @@ class SampleView extends View {
 //        width = taxi.getWidth();
 //        height = taxi.getHeight();
 
-        taxies.add(taxi0);//        taxies.add(taxi1);//        taxies.add(taxi2);//        taxies.add(taxi3);//        taxies.add(taxi4);            int speed = new java.util.Random().nextInt(40);
+        taxies.add(taxi0);
+        //        taxies.add(taxi1);
+        //        taxies.add(taxi2);
+        //        taxies.add(taxi3);
+        //        taxies.add(taxi4);
+            int speed = new java.util.Random().nextInt(40);
             playerVY = - speed;
 
 
@@ -94,6 +101,29 @@ class SampleView extends View {
 
 
     }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        int action = ev.getAction();
+        int x = (int)ev.getX();
+        int y = (int)ev.getY();
+        switch (action & MotionEvent.ACTION_MASK){
+            case MotionEvent.ACTION_DOWN:
+                int i = 0;
+                for(; i < taxies.size(); i++){
+                    Taxi taxi = taxies.get(i);
+                    int taxix = taxi.playerX;
+                    int taxiy = taxi.playerY;
+                    int taxih = taxi.height;
+                    int taxiw = taxi.width;
+                    if (x >= taxix && x <= taxix + taxiw && y >= taxiy && y <= taxiy + taxih);{
+                        taxies.remove(i);
+                    }
+                }
+        }
+        return false;
+    }
+
 
 //    int r = new java.util.Random ().nextInt (5);
 //    int playerX = lane[r];
@@ -121,7 +151,9 @@ class SampleView extends View {
         //1000msに20回更新 => 50msごとに更新
         postInvalidateDelayed(1000 / fps);
 
-    }}
+    }
+
+    }
 
     //Taxiの生成(未完成)    public void makeTaxi(){
 
@@ -129,9 +161,10 @@ class SampleView extends View {
     public void makeTaxi(int playerVY){
 
         int r = new Random().nextInt(5);
-        Taxi taxi0 = new Taxi(r, playerVY);
+        Taxi taxi0 = new Taxi(r, playerVY) ;
 
         taxies.add(taxi0);
 
         }
-    }
+
+}
