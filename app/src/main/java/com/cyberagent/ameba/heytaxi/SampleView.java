@@ -80,13 +80,12 @@ class SampleView extends View {
             int speed = new java.util.Random().nextInt(40);
             playerVY = - speed;
 
-        makeTaxi(playerVY);
-
+        while (taxies.size() < 4) {
+            makeTaxi(playerVY);
+        }
 
     }
 
-//    int r = new java.util.Random ().nextInt (5);
-//    int playerX = lane[r];
 
     @Override
     public void onDraw(Canvas c) {
@@ -128,7 +127,6 @@ class SampleView extends View {
         postInvalidateDelayed(1000 / fps);
 
     }
-
 
 
     //Taxiの生成
