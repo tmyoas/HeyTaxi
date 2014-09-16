@@ -17,37 +17,36 @@ import java.util.Random;
  */
 class SampleView extends View {
     Paint paint = new Paint();
-    int playerY;  //スタートのY座標
-    int dispX = 1080; //画面幅
-    int dispY = 1920;  //画面高さ
+    int playerY;  //スタートのY座標    int dispX = 1080; //画面幅    int dispY = 1920;  //画面高さ
+    int dispX = 720; //画面幅
+    int dispY = 1280;  //画面高さ
+
     Resources res;
-//    int playerX; //タクシー位置x方向
-//    int playerY; //タクシー位置y方向
+//    int playerX; //タクシー位置x方向//    int playerY; //タクシー位置y方向    int playerX; //タクシー位置x方向
+    int playerY; //タクシー位置y方向
+
     int playerVY = -10;  //上に10ずつ動く
     Bitmap taxi;//    int width; //タクシーの画像の幅//    int height; //タクシーの画像の高さ    int viewWidth; //画面の幅    int viewHeight; //画面の高さ
     Bitmap testtaxi;
-    long fps = 20; //fps//描画周期
+    long fps = 20; //fps
 
-//5つのレーンのX座標
+    //5つのレーンのX座標
 //    int[]lane = new int[]{0, 216, 432, 648, 846};//    int[] lane = new int[5];
-   int[]lane = new int[]{0, dispX / 5, 2 * dispX / 5, 3 * dispX / 5, 4 * dispX / 5};
+    int[]lane = new int[]{0, dispX / 5, 2 * dispX / 5, 3 * dispX / 5, 4 * dispX / 5};
+
+//    int[] lane = new int[5];
+//    int[]lane = new int[]{0, dispX / 5, 2 * dispX / 5, 3 * dispX / 5, 4 * dispX / 5};
 
     //resをTaxiに渡そうとすると問題を起こしてアプリが終了します なんでだ
 //    Taxi taxi = new Taxi(res, lane[r], playerVY);
     Taxi taxi0 = new Taxi(lane[new Random().nextInt(5)], playerVY);
-
-//    @Override//    public void onWindowFocusChanged(boolean hasWindowFocus) {
-//    super.onWindowFocusChanged(hasWindowFocus);
-//    viewWidth = getWidth();
-//    viewHeight = getHeight();
-//    タクシーを作る(&消す)メソッドもしくはクラスが必要
+//    @Override//    public void onWindowFocusChanged(boolean hasWindowFocus) {//        super.onWindowFocusChanged(hasWindowFocus);//        viewWidth = getWidth();//        viewHeight = getHeight();    // タクシーを作る(&消す)メソッドもしくはクラスが必要
 //    Taxi taxi1 = new Taxi(lane[new Random().nextInt(5)], playerVY-2);
 //    Taxi taxi2 = new Taxi(lane[new Random().nextInt(5)], playerVY-4);
 //    Taxi taxi3 = new Taxi(lane[new Random().nextInt(5)], playerVY-6);
 //    Taxi taxi4 = new Taxi(lane[new Random().nextInt(5)], playerVY-8);
 
-//        playerY = viewHeight;
-// 複数のタクシー管理
+//        playerY = viewHeight;    //複数のタクシー管理
     ArrayList<Taxi> taxies = new ArrayList<Taxi>();
 
 //    }    @Override
@@ -81,16 +80,19 @@ class SampleView extends View {
 
     private void init() {
         //画像読み込み
+
         res = this.getContext().getResources();
         testtaxi = BitmapFactory.decodeResource(res, R.drawable.ic_launcher);
 //        width = taxi.getWidth();
 //        height = taxi.getHeight();
 
-        taxies.add(taxi0);
-//        taxies.add(taxi1);
-//        taxies.add(taxi2);
-//        taxies.add(taxi3);
-//        taxies.add(taxi4);
+        taxies.add(taxi0);//        taxies.add(taxi1);//        taxies.add(taxi2);//        taxies.add(taxi3);//        taxies.add(taxi4);            int speed = new java.util.Random().nextInt(40);
+            playerVY = - speed;
+
+
+        makeTaxi(playerVY);
+
+
     }
 
 //    int r = new java.util.Random ().nextInt (5);
@@ -105,11 +107,11 @@ class SampleView extends View {
             //数値処理
             taxi.playerY += taxi.playerVY;
 
+
             //上まで行ったら下に戻る動き
 //        if(playerY < 0) {
 //            playerY = dispY;
-//            r = new java.util.Random ().nextInt (5);
-//            playerX = lane[r];
+//            r = new java.util.Random ().nextInt (5);//            playerX = lane[r];//            playerX = lane[new Random().nextInt(5)];
 //        }
             //描画処理
             c.drawBitmap(testtaxi, taxi.playerX, taxi.playerY, paint);
@@ -119,10 +121,18 @@ class SampleView extends View {
         //1000msに20回更新 => 50msごとに更新
         postInvalidateDelayed(1000 / fps);
 
-    }}
+    }
 
-    //Taxiの生成(未完成)
-    public void makeTaxi(){
+    //Taxiの生成(未完成)    public void makeTaxi(){
 
+    //Taxiの生成
+    public void makeTaxi(int playerVY){
+
+        int r = new Random().nextInt(5);
+        Taxi taxi0 = new Taxi(r, playerVY);
+
+        taxies.add(taxi0);
+
+        }
     }
 }

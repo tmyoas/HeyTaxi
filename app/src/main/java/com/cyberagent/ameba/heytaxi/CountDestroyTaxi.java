@@ -4,13 +4,24 @@ package com.cyberagent.ameba.heytaxi;
  * Created by itou on 2014/09/12.
  */
 
-//作っただけ
 //Taxiの当たり判定に当たったときに呼び出し
+
 public class CountDestroyTaxi{
 
     int count_destroy;
 
-    CountDestroyTaxi (int flag) {
+    //コンストラクタ
+    CountDestroyTaxi () {
+        count_destroy = 0;
+    }
 
+    //呼び出してカウント
+    void increment() {
+        count_destroy += 1;
+    }
+
+    //合計の出力
+    int total(){
+       return count_destroy;
     }
 }
