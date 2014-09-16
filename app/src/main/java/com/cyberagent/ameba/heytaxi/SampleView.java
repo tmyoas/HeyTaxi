@@ -23,7 +23,7 @@ class SampleView extends View {
 
     Resources res;
 //    int playerX; //タクシー位置x方向//    int playerY; //タクシー位置y方向    int playerX; //タクシー位置x方向
-    int playerY; //タクシー位置y方向
+//    int playerY; //タクシー位置y方向
 
     int playerVY = -10;  //上に10ずつ動く
     Bitmap taxi;//    int width; //タクシーの画像の幅//    int height; //タクシーの画像の高さ    int viewWidth; //画面の幅    int viewHeight; //画面の高さ
@@ -121,7 +121,7 @@ class SampleView extends View {
         //1000msに20回更新 => 50msごとに更新
         postInvalidateDelayed(1000 / fps);
 
-    }
+    }}
 
     //Taxiの生成(未完成)    public void makeTaxi(){
 
@@ -135,4 +135,3 @@ class SampleView extends View {
 
         }
     }
-}
