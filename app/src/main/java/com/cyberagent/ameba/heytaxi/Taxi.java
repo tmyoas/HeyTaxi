@@ -24,16 +24,6 @@ class Taxi {
     int dispX = 1080; //画面幅
     int lane ;
 
-        //コンストラクタ
-        Taxi(Resources res, int playerX, int playerVY ){
-            this.taxi = BitmapFactory.decodeResource(res, R.drawable.ic_launcher);
-            this.width = taxi.getWidth();
-            this.height = taxi.getHeight();
-            this.playerX = playerX;
-            this.playerVY = playerVY;
-        }
-
-
             //画像読み込みfrom SampleView  書き換え必要(constructor)
 //        private void init () {
 
@@ -42,10 +32,13 @@ class Taxi {
 //            width = taxi.getWidth();
 //            height = taxi.getHeight();
 //        }
-       Taxi( int lane, int playerVY){
+
+    //コンストラクタ
+    Taxi( int lane, int playerVY){
             this.lane = lane;
             this.playerX = 10 + lane * 142;
             this.playerVY = playerVY;
+
         }
 
 
