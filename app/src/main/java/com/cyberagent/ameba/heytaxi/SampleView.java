@@ -7,15 +7,11 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-<<<<<<< HEAD
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-=======
 import android.view.View;
-
->>>>>>> 2446005eb03fde0749f6759a0e489682703cfd0b
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -29,26 +25,20 @@ class SampleView extends View {
     int dispY = 1280;  //画面高さ
 
     Resources res;
-<<<<<<< HEAD
 //    int playerX; //タクシー位置x方向//    int playerY; //タクシー位置y方向    int playerX; //タクシー位置x方向
 //    int playerY; //タクシー位置y方向
-=======
-    int playerY; //タクシー位置y方向
->>>>>>> 2446005eb03fde0749f6759a0e489682703cfd0b
+
+//    int playerY; //タクシー位置y方向
 
     int playerVY = -10;  //上に10ずつ動く
     Bitmap testtaxi;
     Bitmap background;
     long fps = 20; //fps
-
-<<<<<<< HEAD
     //5つのレーンのX座標
 //    int[]lane = new int[]{0, 216, 432, 648, 846};//    int[] lane = new int[5];
     int[]lane = new int[]{0, dispX / 5, 2 * dispX / 5, 3 * dispX / 5, 4 * dispX / 5};
-=======
     CountDownGameOver count_over = new CountDownGameOver();
     boolean detect_over;
->>>>>>> 2446005eb03fde0749f6759a0e489682703cfd0b
 
     //5つのレーンのX座標
 
@@ -114,22 +104,23 @@ class SampleView extends View {
 
     }
 
-<<<<<<< HEAD
+
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         int action = ev.getAction();
-        int x = (int)ev.getX();
-        int y = (int)ev.getY();
-        switch (action & MotionEvent.ACTION_MASK){
+        float x = ev.getX();
+        float y = ev.getY();
+        switch (action& MotionEvent.ACTION_MASK ){
             case MotionEvent.ACTION_DOWN:
-                int i = 0;
-                for(; i < taxies.size(); i++){
+                Log.d("TAG", "action : 2 : ");//動作確認(済)
+                for(int i =0; i < taxies.size(); i++){
                     Taxi taxi = taxies.get(i);
-                    int taxix = taxi.playerX;
-                    int taxiy = taxi.playerY;
-                    int taxih = taxi.height;
-                    int taxiw = taxi.width;
-                    if (x >= taxix && x <= taxix + taxiw && y >= taxiy && y <= taxiy + taxih);{
+                    float taxix = taxi.playerX;
+                    float taxiy = taxi.playerY;
+                    float taxih = taxi.height;
+                    float taxiw = taxi.width;
+                    if (x >= taxix && x <= taxix + taxiw && y >= taxiy && y <= taxiy + taxih){
+                        Log.d("TAG", "action : 3 : " );
                         taxies.remove(i);
                     }
                 }
@@ -140,8 +131,6 @@ class SampleView extends View {
 
 //    int r = new java.util.Random ().nextInt (5);
 //    int playerX = lane[r];
-=======
->>>>>>> 2446005eb03fde0749f6759a0e489682703cfd0b
 
     @Override
     public void onDraw(Canvas c) {
@@ -184,19 +173,15 @@ class SampleView extends View {
 
     }
 
-    }
 
-<<<<<<< HEAD
     //Taxiの生成(未完成)    public void makeTaxi(){
-
-=======
->>>>>>> 2446005eb03fde0749f6759a0e489682703cfd0b
     //Taxiの生成
     public void makeTaxi(int playerVY){
 
         int r = new Random().nextInt(5);
         Taxi taxi0 = new Taxi(r, playerVY) ;
-
+        taxi0.height = testtaxi.getHeight();
+        taxi0.width = testtaxi.getWidth();
         taxies.add(taxi0);
 
         }

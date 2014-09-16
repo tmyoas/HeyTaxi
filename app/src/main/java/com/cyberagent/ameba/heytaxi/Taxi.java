@@ -8,16 +8,12 @@ import android.graphics.Paint;
 
 //abstract class Taxi {
 
-    public class Taxi {
+    class Taxi {
 
     Paint paint = new Paint();
     //スタートのY座標    int playerVY = -10;  //上に10ずつ動く
     int playerX; //スタートのx座標
-<<<<<<< .mine
-    int playerY= 1280;  //スタートのY座標
-=======
     int playerY = 1280;  //スタートのY座標
->>>>>>> .theirs
     int playerVY;  //y方向移動量
     Bitmap taxi;
     Resources res;
