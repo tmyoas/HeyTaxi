@@ -21,51 +21,22 @@ import java.util.Random;
  */
 class SampleView extends View {
     Paint paint = new Paint();
-    int playerY;  //スタートのY座標    int dispX = 1080; //画面幅    int dispY = 1920;  //画面高さ
+    int playerY;  //スタートのY座標
     int dispX = 720; //画面幅
     int dispY = 1280;  //画面高さ
-
     Resources res;
-//    int playerX; //タクシー位置x方向//    int playerY; //タクシー位置y方向    int playerX; //タクシー位置x方向
-//    int playerY; //タクシー位置y方向
-
-//    int playerY; //タクシー位置y方向
-
-//    int playerY; //タクシー位置y方向
-
     Bitmap testtaxi;
     Bitmap background;
     long fps = 20; //fps
-    //5つのレーンのX座標
-//    int[]lane = new int[]{0, 216, 432, 648, 846};//    int[] lane = new int[5];
-    int[]lane = new int[]{0, dispX / 5, 2 * dispX / 5, 3 * dispX / 5, 4 * dispX / 5};
-
     Random r = new Random();
-
 
     CountDownGameOver count_over = new CountDownGameOver();
     boolean detect_over;
 
-    //5つのレーンのX座標
-
-    //resをTaxiに渡そうとすると問題を起こしてアプリが終了します なんでだ
-//    Taxi taxi = new Taxi(res, lane[r], playerVY);
-//    Taxi taxi0 = new Taxi(lane[new Random().nextInt(5)], playerVY) ;
-//    @Override//    public void onWindowFocusChanged(boolean hasWindowFocus) {//        super.onWindowFocusChanged(hasWindowFocus);//        viewWidth = getWidth();//        viewHeight = getHeight();    // タクシーを作る(&消す)メソッドもしくはクラスが必要
-//    Taxi taxi1 = new Taxi(lane[new Random().nextInt(5)], playerVY-2);
-//    Taxi taxi2 = new Taxi(lane[new Random().nextInt(5)], playerVY-4);
-//    Taxi taxi3 = new Taxi(lane[new Random().nextInt(5)], playerVY-6);
-//    Taxi taxi4 = new Taxi(lane[new Random().nextInt(5)], playerVY-8);
-
-//        playerY = viewHeight;    //複数のタクシー管理
-
     //複数のタクシー管理
-
-
-
     ArrayList<Taxi> taxies = new ArrayList<Taxi>();
 
-//    }    @Override
+@Override
     public void onWindowFocusChanged(boolean hasWindowFocus) {
         super.onWindowFocusChanged(hasWindowFocus);
     }
@@ -96,11 +67,6 @@ class SampleView extends View {
 
    }
 
-
-
-//    int r = new java.util.Random ().nextInt (5);
-//    int playerX = lane[r];
-
     @Override
     public void onDraw(Canvas c) {
         c.drawBitmap(background, 0, 0, paint);
@@ -111,12 +77,6 @@ class SampleView extends View {
             //数値処理
             taxi.playerY += taxi.playerVY;
 
-
-            //上まで行ったら下に戻る動き
-//        if(playerY < 0) {
-//            playerY = dispY;
-//            r = new java.util.Random ().nextInt (5);//            playerX = lane[r];//            playerX = lane[new Random().nextInt(5)];
-//        }
             //描画処理
             c.drawBitmap(testtaxi, taxi.playerX, taxi.playerY, paint);
 
@@ -135,8 +95,6 @@ class SampleView extends View {
             }
 
         }
-
-
 
         for (int i = 0; i < taxies.size(); i++) {
             Taxi taxi = taxies.get(i);
@@ -161,39 +119,39 @@ class SampleView extends View {
 
         }
 
+        paint.setARGB(255,255,255,255);
+        paint.setTextSize(64);
+        paint.setAntiAlias(true);
+        c.drawText("1", 60 + 0 * 142,75,paint);
+        c.drawText("2", 60 + 1 * 142,75,paint);
+        c.drawText("3", 60 + 2 * 142,75,paint);
+        c.drawText("4", 60 + 3 * 142,75,paint);
+        c.drawText("5", 60 + 4 * 142,75,paint);
+
+
         //1000msに20回更新 => 50msごとに更新
         postInvalidateDelayed(1000 / fps);
 
+
+
     }
 
-
-
-//    int r = new java.util.Random ().nextInt (5);
-//    int playerX = lane[r];
-
-    //Taxiの生成(未完成)    public void makeTaxi(){
     //Taxiの生成
     public void makeTaxi(int playerVY){
 
-//        int r = new Random().nextInt(5);
-//        Taxi taxi0 = new Taxi(r, playerVY) ;
         Taxi taxi0 = new Taxi(r.nextInt(5), playerVY);
         taxi0.height = testtaxi.getHeight();
         taxi0.width = testtaxi.getWidth();
-
 
         taxies.add(taxi0);
 
         }
 
-
-
-
     public void removeTaxi (Taxi taxi){
         taxies.remove(taxi);
+
+
     }
-
-
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
