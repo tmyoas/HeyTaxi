@@ -7,10 +7,15 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+<<<<<<< HEAD
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+=======
+import android.view.View;
+
+>>>>>>> 2446005eb03fde0749f6759a0e489682703cfd0b
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -24,20 +29,28 @@ class SampleView extends View {
     int dispY = 1280;  //画面高さ
 
     Resources res;
+<<<<<<< HEAD
 //    int playerX; //タクシー位置x方向//    int playerY; //タクシー位置y方向    int playerX; //タクシー位置x方向
 //    int playerY; //タクシー位置y方向
+=======
+    int playerY; //タクシー位置y方向
+>>>>>>> 2446005eb03fde0749f6759a0e489682703cfd0b
 
     int playerVY = -10;  //上に10ずつ動く
-    Bitmap taxi;//    int width; //タクシーの画像の幅//    int height; //タクシーの画像の高さ    int viewWidth; //画面の幅    int viewHeight; //画面の高さ
     Bitmap testtaxi;
+    Bitmap background;
     long fps = 20; //fps
 
+<<<<<<< HEAD
     //5つのレーンのX座標
 //    int[]lane = new int[]{0, 216, 432, 648, 846};//    int[] lane = new int[5];
     int[]lane = new int[]{0, dispX / 5, 2 * dispX / 5, 3 * dispX / 5, 4 * dispX / 5};
+=======
+    CountDownGameOver count_over = new CountDownGameOver();
+    boolean detect_over;
+>>>>>>> 2446005eb03fde0749f6759a0e489682703cfd0b
 
-//    int[] lane = new int[5];
-//    int[]lane = new int[]{0, dispX / 5, 2 * dispX / 5, 3 * dispX / 5, 4 * dispX / 5};
+    //5つのレーンのX座標
 
     //resをTaxiに渡そうとすると問題を起こしてアプリが終了します なんでだ
 //    Taxi taxi = new Taxi(res, lane[r], playerVY);
@@ -84,9 +97,8 @@ class SampleView extends View {
         //画像読み込み
 
         res = this.getContext().getResources();
-        testtaxi = BitmapFactory.decodeResource(res, R.drawable.ic_launcher);
-//        width = taxi.getWidth();
-//        height = taxi.getHeight();
+        testtaxi = BitmapFactory.decodeResource(res, R.drawable.taxi_default);
+        background = BitmapFactory.decodeResource(res, R.drawable.background);
 
         taxies.add(taxi0);
         //        taxies.add(taxi1);
@@ -96,12 +108,13 @@ class SampleView extends View {
             int speed = new java.util.Random().nextInt(40);
             playerVY = - speed;
 
-
-        makeTaxi(playerVY);
-
+        while (taxies.size() < 4) {
+            makeTaxi(playerVY);
+        }
 
     }
 
+<<<<<<< HEAD
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         int action = ev.getAction();
@@ -127,9 +140,12 @@ class SampleView extends View {
 
 //    int r = new java.util.Random ().nextInt (5);
 //    int playerX = lane[r];
+=======
+>>>>>>> 2446005eb03fde0749f6759a0e489682703cfd0b
 
     @Override
     public void onDraw(Canvas c) {
+        c.drawBitmap(background, 0, 0, paint);
 
         //数値処理//        playerY += playerVY;
         for (int i = 0; i < taxies.size(); i++) {
@@ -146,6 +162,21 @@ class SampleView extends View {
             //描画処理
             c.drawBitmap(testtaxi, taxi.playerX, taxi.playerY, paint);
 
+            //死亡判定(仮)
+            if (taxi.playerY < 300) {
+
+                detect_over = count_over.touchline(taxi.lane);
+//                Log.v("CHECK", "count_over[i] : " + count_over.count_over[i]);
+                if (detect_over){
+                    //残り0(ゲームが終わる)になったときの処理
+//                    Log.v("CHECK", "GameEnd");
+                }else{
+                    //それ以外(まだゲームが続く)のときの処理
+//                    Log.v("CHECK", "Continue");
+                }
+            }
+        }
+
         // ループ処理、スピードの調整（ミリ秒）
 //            postInvalidateDelayed(50);
         //1000msに20回更新 => 50msごとに更新
@@ -155,8 +186,11 @@ class SampleView extends View {
 
     }
 
+<<<<<<< HEAD
     //Taxiの生成(未完成)    public void makeTaxi(){
 
+=======
+>>>>>>> 2446005eb03fde0749f6759a0e489682703cfd0b
     //Taxiの生成
     public void makeTaxi(int playerVY){
 
