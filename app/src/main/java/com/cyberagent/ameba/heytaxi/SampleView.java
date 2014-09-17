@@ -83,7 +83,7 @@ class SampleView extends View {
             //死亡判定(仮)
             if (taxi.playerY < 300) {
 
-                detect_over = count_over.touchline(taxi.lane);
+
 //                Log.v("CHECK", "count_over[i] : " + count_over.count_over[i]);
                 if (detect_over){
                     //残り0(ゲームが終わる)になったときの処理
@@ -100,6 +100,7 @@ class SampleView extends View {
             Taxi taxi = taxies.get(i);
 
             if (taxi.playerY < 150 - testtaxi.getHeight()) {
+                detect_over = count_over.touchline(taxi.lane);
                 removeTaxi(taxi);
             }
         }
@@ -122,11 +123,11 @@ class SampleView extends View {
         paint.setARGB(255,255,255,255);
         paint.setTextSize(64);
         paint.setAntiAlias(true);
-        c.drawText("1", 60 + 0 * 142,75,paint);
-        c.drawText("2", 60 + 1 * 142,75,paint);
-        c.drawText("3", 60 + 2 * 142,75,paint);
-        c.drawText("4", 60 + 3 * 142,75,paint);
-        c.drawText("5", 60 + 4 * 142,75,paint);
+        c.drawText("" + count_over.count_over[0], 60 + 0 * 142,75,paint);
+        c.drawText("" + count_over.count_over[1], 60 + 1 * 142,75,paint);
+        c.drawText("" + count_over.count_over[2], 60 + 2 * 142,75,paint);
+        c.drawText("" + count_over.count_over[3], 60 + 3 * 142,75,paint);
+        c.drawText("" + count_over.count_over[4], 60 + 4 * 142,75,paint);
 
 
         //1000msに20回更新 => 50msごとに更新
