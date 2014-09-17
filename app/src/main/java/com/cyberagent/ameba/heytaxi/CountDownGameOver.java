@@ -9,9 +9,13 @@ public class CountDownGameOver {
     int[] count_over = new int[5];
     boolean gameend;
 
+
     CountDownGameOver () {
         count_over = new int[]{5, 5, 5, 5, 5};
     }
+
+
+
 
     //タクシーがタッチされないまま画面上端に到達したときの処理
     public boolean touchline(int lane){

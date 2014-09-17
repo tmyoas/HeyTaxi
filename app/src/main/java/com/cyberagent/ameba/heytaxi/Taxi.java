@@ -23,6 +23,8 @@ import android.graphics.Paint;
     int viewHeight; //画面の高さ
     int dispX = 1080; //画面幅
     int lane ;
+    boolean flag = false;
+    int deletecount = 20 ;
 
             //画像読み込みfrom SampleView  書き換え必要(constructor)
 //        private void init () {
@@ -38,7 +40,6 @@ import android.graphics.Paint;
             this.lane = lane;
             this.playerX = 10 + lane * 142;
             this.playerVY = playerVY;
-
         }
 
         //    CollisionDetection(Resources res, int playerX, int playerVY) {

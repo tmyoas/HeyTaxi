@@ -30,7 +30,11 @@ public class ResultActivity extends Activity {
         setContentView(R.layout.activity_result);
         init();
 
-        text_count.setText("Count : "  );
+
+        Intent intent = getIntent();
+        int result = intent.getIntExtra("RESULT", 0);
+
+        text_count.setText("Count : " + result);
         button_game.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
