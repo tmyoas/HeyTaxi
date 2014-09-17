@@ -30,6 +30,7 @@ class SampleView extends View {
     Bitmap changedtaxi;
     long fps = 20; //fps
     Random r = new Random();
+    int takasa;
 
     CountDownGameOver count_over = new CountDownGameOver();
     CountDestroyTaxi count_destroy = new CountDestroyTaxi();
@@ -38,7 +39,7 @@ class SampleView extends View {
     //複数のタクシー管理
     ArrayList<Taxi> taxies = new ArrayList<Taxi>();
 
-@Override
+    @Override
     public void onWindowFocusChanged(boolean hasWindowFocus) {
         super.onWindowFocusChanged(hasWindowFocus);
     }
@@ -66,12 +67,12 @@ class SampleView extends View {
         changedtaxi = BitmapFactory.decodeResource(res, R.drawable.taxi_crash);
         background = BitmapFactory.decodeResource(res, R.drawable.background_margin150);
         over = BitmapFactory.decodeResource(res, R.drawable.background_overwrite);
-
+        takasa = testtaxi.getHeight();
         makeTaxi(-20);
 
         postInvalidate();
 
-   }
+    }
 
     @Override
     public void onDraw(Canvas c) {
@@ -81,37 +82,60 @@ class SampleView extends View {
 
         c.drawBitmap(background, 0, 0, paint);
 
-        //数値処理//        playerY += playerVY;
+
         for (int i = 0; i < taxies.size(); i++) {
             Taxi taxi = taxies.get(i);
             //数値処理
             taxi.playerY += taxi.playerVY;
 
-            //描画処理
-            if(taxi.flag){
-                c.drawBitmap(changedtaxi,taxi.playerX, taxi.playerY, paint);
-                taxi.deletecount -= 1;
-                 if(taxi.deletecount == 0){
-                     taxies.remove(i);
-                 }
+            //        for eachに変更必要
+            for (int j = i - 1; j >= 0; j--) {
+                Taxi taxi1 = taxies.get(j);
+                if (taxi.lane == taxi1.lane) {
 
-            }else{
+                    if (taxi.playerY - taxi1.playerY < 293 + 35) {
+//math 関数使う
+                        if (taxi.lane > 0 && taxi.lane < 4) {
+
+                            if (r.nextInt(2) == 0) {
+                                taxi.lane++;
+                                taxi.playerX += 143;
+                            } else {
+                                taxi.lane--;
+                                taxi.playerX -= 143;
+                            }
+                        }
+
+                    }
+                }
+            }
+
+            //描画処理
+            if (taxi.flag) {
+                c.drawBitmap(changedtaxi, taxi.playerX, taxi.playerY, paint);
+                taxi.deletecount -= 1;
+                if (taxi.deletecount == 0) {
+                    taxies.remove(i);
+                }
+
+            } else {
                 c.drawBitmap(testtaxi, taxi.playerX, taxi.playerY, paint);
             }
 
-                if (detect_over){
-                    //残り0(ゲームが終わる)になったときの処理
-                    Intent intent = new Intent(getContext(), ResultActivity.class);
-                    intent.putExtra("RESULT", count_destroy.count_destroy);
-                    getContext().startActivity(intent);
+            if (detect_over) {
+                //残り0(ゲームが終わる)になったときの処理
+                Intent intent = new Intent(getContext(), ResultActivity.class);
+                intent.putExtra("RESULT", count_destroy.count_destroy);
+                getContext().startActivity(intent);
 
-                }else{
+            } else {
 
-                }
+            }
+
 
         }
 
-        //上についたタクシーを消す
+        //上についたタクシーを消す  for eachに変更必要
         for (int i = 0; i < taxies.size(); i++) {
             Taxi taxi = taxies.get(i);
 
@@ -122,7 +146,7 @@ class SampleView extends View {
         }
 
         //タクシーを4台まで生成する
-        if (taxies.size() < 5){
+        if (taxies.size() < 5) {
 
             int i = new Random().nextInt(40);
 
@@ -134,19 +158,42 @@ class SampleView extends View {
                 makeTaxi(playerVY);
             }
 
+
         }
+
+//        for (int j = 0; j > 0; j-- ){
+//            Taxi taxi = taxies.get(j);
+//            Taxi taxi1 = taxies.get(j+1);
+//
+//            if (taxi1.lane == taxi.lane){
+//                if (taxi1.playerY - taxi.playerY < testtaxi.getHeight() + 35) {
+//
+//                    if (taxi1.lane > 0 && taxi1.lane < 4){
+//
+//                        if (r.nextInt(2) == 0) {
+//                            taxi1.lane = taxi1.lane++;
+//                            taxi1.playerX = taxi1.playerX + 143;
+//                        } else {
+//                            taxi1.lane = taxi1.lane--;
+//                            taxi1.playerX = taxi1.playerX - 143;
+//                        }
+//                    }
+//
+//                }
+//            }
+//        }
 
         //タクシーが白背景の下を通るように
         c.drawBitmap(over, 0, 0, paint);
 
         //書式設定
-        paint.setARGB(255,0,0,0);
+        paint.setARGB(255, 0, 0, 0);
         paint.setTextSize(72);
         paint.setAntiAlias(true);
 
         //台数カウントダウン表示
 
-        for (int i=0; i < 5; i++) {
+        for (int i = 0; i < 5; i++) {
             c.drawText("" + count_over.count_over[i], 55 + i * 142, 100, paint);
         }
 
@@ -156,7 +203,7 @@ class SampleView extends View {
     }
 
     //Taxiの生成
-    public void makeTaxi(int playerVY){
+    public void makeTaxi(int playerVY) {
 
         Taxi taxi0 = new Taxi(r.nextInt(5), playerVY);
         taxi0.height = testtaxi.getHeight();
@@ -164,10 +211,10 @@ class SampleView extends View {
 
         taxies.add(taxi0);
 
-        }
+    }
 
     //配列からtaxiを消す
-    public void removeTaxi (Taxi taxi){
+    public void removeTaxi(Taxi taxi) {
         taxies.remove(taxi);
 
     }
@@ -177,16 +224,16 @@ class SampleView extends View {
         int action = ev.getAction();
         float x = ev.getX();
         float y = ev.getY();
-        switch (action& MotionEvent.ACTION_MASK ){
+        switch (action & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
-                for(int i =0; i < taxies.size(); i++){
+                for (int i = 0; i < taxies.size(); i++) {
                     Taxi taxi = taxies.get(i);
                     float taxix = taxi.playerX;
                     float taxiy = taxi.playerY;
                     float taxih = taxi.height;
                     float taxiw = taxi.width;
-                    if (x >= taxix && x <= taxix + taxiw && y >= taxiy && y <= taxiy + taxih && y >150){
-                        taxi.playerVY = 0  ;
+                    if (x >= taxix && x <= taxix + taxiw && y >= taxiy && y <= taxiy + taxih && y > 150) {
+                        taxi.playerVY = 0;
                         count_destroy.increment();
                         taxi.flag = true;
                     }
@@ -195,7 +242,6 @@ class SampleView extends View {
         }
         return false;
     }
-
 
 
 }
