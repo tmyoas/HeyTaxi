@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.view.View;
 import java.util.ArrayList;
 import java.util.Random;
+import android.os.Handler;
 
 /**
  * Created by misa0429 on 2014/09/11.
@@ -29,6 +30,7 @@ class SampleView extends View {
     Bitmap testtaxi;
     Bitmap background;
     Bitmap over;
+    Bitmap changedtaxi;
     long fps = 20; //fps
     Random r = new Random();
 
@@ -64,6 +66,7 @@ class SampleView extends View {
 
         res = this.getContext().getResources();
         testtaxi = BitmapFactory.decodeResource(res, R.drawable.taxi_default);
+        changedtaxi = BitmapFactory.decodeResource(res, R.drawable.taxi_crash);
         background = BitmapFactory.decodeResource(res, R.drawable.background_margin150);
         over = BitmapFactory.decodeResource(res, R.drawable.background_overwrite);
 
@@ -75,6 +78,10 @@ class SampleView extends View {
 
     @Override
     public void onDraw(Canvas c) {
+        //1000msに20回更新 => 50msごとに更新\
+        postInvalidateDelayed(1000 / fps);
+
+
         c.drawBitmap(background, 0, 0, paint);
 
         //数値処理//        playerY += playerVY;
@@ -84,7 +91,16 @@ class SampleView extends View {
             taxi.playerY += taxi.playerVY;
 
             //描画処理
-            c.drawBitmap(testtaxi, taxi.playerX, taxi.playerY, paint);
+            if(taxi.flag){
+                c.drawBitmap(changedtaxi,taxi.playerX, taxi.playerY, paint);
+                taxi.deletecount -= 1;
+                 if(taxi.deletecount == 0){
+                     taxies.remove(i);
+                 }
+
+            }else{
+                c.drawBitmap(testtaxi, taxi.playerX, taxi.playerY, paint);
+            }
 
 //                Log.v("CHECK", "count_over[i] : " + count_over.count_over[i]);
                 if (detect_over){
@@ -128,6 +144,7 @@ class SampleView extends View {
             }
 
         }
+
 
         //タクシーが白背景の下を通るように
         c.drawBitmap(over, 0, 0, paint);
@@ -175,20 +192,24 @@ class SampleView extends View {
         float y = ev.getY();
         switch (action& MotionEvent.ACTION_MASK ){
             case MotionEvent.ACTION_DOWN:
-                Log.d("TAG", "action : 2 : ");//動作確認(済)
+                Log.d("TAG", " Touch ");//動作確認(済)
                 for(int i =0; i < taxies.size(); i++){
                     Taxi taxi = taxies.get(i);
                     float taxix = taxi.playerX;
                     float taxiy = taxi.playerY;
                     float taxih = taxi.height;
                     float taxiw = taxi.width;
-                    if (x >= taxix && x <= taxix + taxiw && y >= taxiy && y <= taxiy + taxih){
-                        Log.d("TAG", "action : 3 : " );
-                        taxies.remove(i);
+                    if (x >= taxix && x <= taxix + taxiw && y >= taxiy && y <= taxiy + taxih && y >150){
+                        Log.d("TAG", " ifTouch " );
+                        taxi.playerVY = 0  ;
+                        count_destroy.increment();
+                        taxi.flag = true;
                     }
+
                 }
         }
         return false;
     }
+
 
 }
