@@ -79,12 +79,12 @@ public class ResultActivity extends Activity {
 
 
     public void goGame(){
-        Intent intent = new Intent(this, com.cyberagent.ameba.heytaxi.MainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         this.startActivity(intent);
     }
 
     public void goTitle(){
-        Intent intent = new Intent(this, com.cyberagent.ameba.heytaxi.TitleActivity.class);
+        Intent intent = new Intent(this, TitleActivity.class);
         this.startActivity(intent);
     }
 }
