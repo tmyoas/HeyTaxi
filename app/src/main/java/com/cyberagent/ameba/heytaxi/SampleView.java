@@ -27,6 +27,7 @@ class SampleView extends View {
     Resources res;
     Bitmap testtaxi;
     Bitmap background;
+    Bitmap over;
     long fps = 20; //fps
     Random r = new Random();
 
@@ -62,6 +63,7 @@ class SampleView extends View {
         res = this.getContext().getResources();
         testtaxi = BitmapFactory.decodeResource(res, R.drawable.taxi_default);
         background = BitmapFactory.decodeResource(res, R.drawable.background_margin150);
+        over = BitmapFactory.decodeResource(res, R.drawable.background_overwrite);
 
         postInvalidate();
 
@@ -96,6 +98,7 @@ class SampleView extends View {
 
         }
 
+        //上についたタクシーを消す
         for (int i = 0; i < taxies.size(); i++) {
             Taxi taxi = taxies.get(i);
 
@@ -105,6 +108,7 @@ class SampleView extends View {
             }
         }
 
+        //タクシーを4台まで生成する
         if (taxies.size() < 4){
 
             int i = new Random().nextInt(40);
@@ -120,9 +124,15 @@ class SampleView extends View {
 
         }
 
+        //タクシーが白背景の下を通るように
+        c.drawBitmap(over, 0, 0, paint);
+
+        //書式設定
         paint.setARGB(255,0,0,0);
         paint.setTextSize(72);
         paint.setAntiAlias(true);
+
+        //台数カウントダウン表示
         c.drawText("" + count_over.count_over[0], 55 + 0 * 142,100,paint);
         c.drawText("" + count_over.count_over[1], 55 + 1 * 142,100,paint);
         c.drawText("" + count_over.count_over[2], 55 + 2 * 142,100,paint);
@@ -132,8 +142,6 @@ class SampleView extends View {
 
         //1000msに20回更新 => 50msごとに更新
         postInvalidateDelayed(1000 / fps);
-
-
 
     }
 
@@ -148,6 +156,7 @@ class SampleView extends View {
 
         }
 
+    //配列からtaxiを消す
     public void removeTaxi (Taxi taxi){
         taxies.remove(taxi);
 
