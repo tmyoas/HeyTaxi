@@ -22,7 +22,7 @@ public class TaxiSE
         this.taxise[0] = soundPool.load(context, R.raw.baku027, 1);
         this.taxise[1] = soundPool.load(context, R.raw.crash, 1);
         this.taxise[2] = soundPool.load(context, R.raw.ta_ta_dokan01, 1);
-        this.taxise[2] = soundPool.load(context, R.raw.sen_mi_lasergun03, 1);
+        this.taxise[3] = soundPool.load(context, R.raw.sen_mi_lasergun03, 1);
 
     }
 
