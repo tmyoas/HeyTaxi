@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.media.SoundPool;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -35,6 +36,11 @@ class SampleView extends View {
     CountDownGameOver count_over = new CountDownGameOver();
     CountDestroyTaxi count_destroy = new CountDestroyTaxi();
     boolean detect_over;
+    //プレイヤーの初期化
+    TaxiSE se = new TaxiSE(this.getContext());
+    int se0 = se.taxise[0];
+    int se1 = se.taxise[1];
+    int ser = se.taxise[r.nextInt(2)];
 
     //複数のタクシー管理
     ArrayList<Taxi> taxies = new ArrayList<Taxi>();
@@ -87,6 +93,7 @@ class SampleView extends View {
             Taxi taxi = taxies.get(i);
             //数値処理
             taxi.playerY += taxi.playerVY;
+
 
             //        for eachに変更必要
             for (int j = i - 1; j >= 0; j--) {
@@ -236,6 +243,7 @@ class SampleView extends View {
                         taxi.playerVY = 0;
                         count_destroy.increment();
                         taxi.flag = true;
+                        se.playSe(r.nextInt(4));
                     }
 
                 }
