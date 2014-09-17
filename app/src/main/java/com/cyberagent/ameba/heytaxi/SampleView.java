@@ -61,7 +61,7 @@ class SampleView extends View {
 
         res = this.getContext().getResources();
         testtaxi = BitmapFactory.decodeResource(res, R.drawable.taxi_default);
-        background = BitmapFactory.decodeResource(res, R.drawable.background);
+        background = BitmapFactory.decodeResource(res, R.drawable.background_margin150);
 
         postInvalidate();
 
@@ -120,14 +120,14 @@ class SampleView extends View {
 
         }
 
-        paint.setARGB(255,255,255,255);
-        paint.setTextSize(64);
+        paint.setARGB(255,0,0,0);
+        paint.setTextSize(72);
         paint.setAntiAlias(true);
-        c.drawText("" + count_over.count_over[0], 60 + 0 * 142,75,paint);
-        c.drawText("" + count_over.count_over[1], 60 + 1 * 142,75,paint);
-        c.drawText("" + count_over.count_over[2], 60 + 2 * 142,75,paint);
-        c.drawText("" + count_over.count_over[3], 60 + 3 * 142,75,paint);
-        c.drawText("" + count_over.count_over[4], 60 + 4 * 142,75,paint);
+        c.drawText("" + count_over.count_over[0], 55 + 0 * 142,100,paint);
+        c.drawText("" + count_over.count_over[1], 55 + 1 * 142,100,paint);
+        c.drawText("" + count_over.count_over[2], 55 + 2 * 142,100,paint);
+        c.drawText("" + count_over.count_over[3], 55 + 3 * 142,100,paint);
+        c.drawText("" + count_over.count_over[4], 55 + 4 * 142,100,paint);
 
 
         //1000msに20回更新 => 50msごとに更新
