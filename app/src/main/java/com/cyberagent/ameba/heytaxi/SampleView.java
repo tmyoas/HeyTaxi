@@ -70,7 +70,7 @@ class SampleView extends View {
         background = BitmapFactory.decodeResource(res, R.drawable.background_margin150);
         over = BitmapFactory.decodeResource(res, R.drawable.background_overwrite);
 
-        makeTaxi(-40);
+        makeTaxi(-20);
 
         postInvalidate();
 
@@ -102,20 +102,15 @@ class SampleView extends View {
                 c.drawBitmap(testtaxi, taxi.playerX, taxi.playerY, paint);
             }
 
-//                Log.v("CHECK", "count_over[i] : " + count_over.count_over[i]);
                 if (detect_over){
                     //残り0(ゲームが終わる)になったときの処理
                     Intent intent = new Intent(getContext(), ResultActivity.class);
                     intent.putExtra("RESULT", count_destroy.count_destroy);
                     getContext().startActivity(intent);
 
-
-//                    Log.v("CHECK", "GameEnd");
                 }else{
-                    //それ以外(まだゲームが続く)のときの処理
-//                    Log.v("CHECK", "Continue");
-                }
 
+                }
 
         }
 
@@ -130,7 +125,7 @@ class SampleView extends View {
         }
 
         //タクシーを4台まで生成する
-        if (taxies.size() < 4){
+        if (taxies.size() < 5){
 
             int i = new Random().nextInt(40);
 
@@ -139,12 +134,10 @@ class SampleView extends View {
                 int speed = new java.util.Random().nextInt(30) + 5;
                 int playerVY = -speed;
 
-
                 makeTaxi(playerVY);
             }
 
         }
-
 
         //タクシーが白背景の下を通るように
         c.drawBitmap(over, 0, 0, paint);
@@ -181,7 +174,6 @@ class SampleView extends View {
     //配列からtaxiを消す
     public void removeTaxi (Taxi taxi){
         taxies.remove(taxi);
-
 
     }
 
