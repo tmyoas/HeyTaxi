@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.media.SoundPool;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -34,10 +35,14 @@ class SampleView extends View {
     CountDownGameOver count_over = new CountDownGameOver();
     CountDestroyTaxi count_destroy = new CountDestroyTaxi();
     boolean detect_over;
+    //プレイヤーの初期化
+    TaxiSE se = new TaxiSE(this.getContext());
+    int se0 = se.taxise[0];
+    int se1 = se.taxise[1];
+    int ser = se.taxise[r.nextInt(2)];
 
     //複数のタクシー管理
     ArrayList<Taxi> taxies = new ArrayList<Taxi>();
-
 @Override
     public void onWindowFocusChanged(boolean hasWindowFocus) {
         super.onWindowFocusChanged(hasWindowFocus);
@@ -67,7 +72,7 @@ class SampleView extends View {
         background = BitmapFactory.decodeResource(res, R.drawable.background_margin150);
         over = BitmapFactory.decodeResource(res, R.drawable.background_overwrite);
 
-        makeTaxi(-40);
+        makeTaxi(-20);
 
         postInvalidate();
 
@@ -87,9 +92,16 @@ class SampleView extends View {
             //数値処理
             taxi.playerY += taxi.playerVY;
 
-            //描画処理
+
+            //上まで行ったら下に戻る動き
+//        if(playerY < 0) {
+//            playerY = dispY;
+//            r = new java.util.Random ().nextInt (5);//            playerX = lane[r];//            playerX = lane[new Random().nextInt(5)];
+//        }
+
             if(taxi.flag){
                 c.drawBitmap(changedtaxi,taxi.playerX, taxi.playerY, paint);
+
                 taxi.deletecount -= 1;
                  if(taxi.deletecount == 0){
                      taxies.remove(i);
@@ -99,20 +111,15 @@ class SampleView extends View {
                 c.drawBitmap(testtaxi, taxi.playerX, taxi.playerY, paint);
             }
 
-//                Log.v("CHECK", "count_over[i] : " + count_over.count_over[i]);
                 if (detect_over){
                     //残り0(ゲームが終わる)になったときの処理
                     Intent intent = new Intent(getContext(), ResultActivity.class);
                     intent.putExtra("RESULT", count_destroy.count_destroy);
                     getContext().startActivity(intent);
 
-
-//                    Log.v("CHECK", "GameEnd");
                 }else{
-                    //それ以外(まだゲームが続く)のときの処理
-//                    Log.v("CHECK", "Continue");
-                }
 
+                }
 
         }
 
@@ -127,7 +134,7 @@ class SampleView extends View {
         }
 
         //タクシーを4台まで生成する
-        if (taxies.size() < 4){
+        if (taxies.size() < 5){
 
             int i = new Random().nextInt(40);
 
@@ -136,12 +143,10 @@ class SampleView extends View {
                 int speed = new java.util.Random().nextInt(30) + 5;
                 int playerVY = -speed;
 
-
                 makeTaxi(playerVY);
             }
 
         }
-
 
         //タクシーが白背景の下を通るように
         c.drawBitmap(over, 0, 0, paint);
@@ -152,12 +157,10 @@ class SampleView extends View {
         paint.setAntiAlias(true);
 
         //台数カウントダウン表示
-        c.drawText("" + count_over.count_over[0], 55 + 0 * 142,100,paint);
-        c.drawText("" + count_over.count_over[1], 55 + 1 * 142,100,paint);
-        c.drawText("" + count_over.count_over[2], 55 + 2 * 142,100,paint);
-        c.drawText("" + count_over.count_over[3], 55 + 3 * 142,100,paint);
-        c.drawText("" + count_over.count_over[4], 55 + 4 * 142,100,paint);
 
+        for (int i=0; i < 5; i++) {
+            c.drawText("" + count_over.count_over[i], 55 + i * 142, 100, paint);
+        }
 
         //1000msに20回更新 => 50msごとに更新
         postInvalidateDelayed(1000 / fps);
@@ -179,7 +182,6 @@ class SampleView extends View {
     public void removeTaxi (Taxi taxi){
         taxies.remove(taxi);
 
-
     }
 
     @Override
@@ -189,7 +191,6 @@ class SampleView extends View {
         float y = ev.getY();
         switch (action& MotionEvent.ACTION_MASK ){
             case MotionEvent.ACTION_DOWN:
-                Log.d("TAG", " Touch ");//動作確認(済)
                 for(int i =0; i < taxies.size(); i++){
                     Taxi taxi = taxies.get(i);
                     float taxix = taxi.playerX;
@@ -197,10 +198,10 @@ class SampleView extends View {
                     float taxih = taxi.height;
                     float taxiw = taxi.width;
                     if (x >= taxix && x <= taxix + taxiw && y >= taxiy && y <= taxiy + taxih && y >150){
-                        Log.d("TAG", " ifTouch " );
                         taxi.playerVY = 0  ;
                         count_destroy.increment();
                         taxi.flag = true;
+                        se.playSe(r.nextInt(4));
                     }
 
                 }
