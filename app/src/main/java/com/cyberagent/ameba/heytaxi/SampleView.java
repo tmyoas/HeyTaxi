@@ -1,6 +1,7 @@
 package com.cyberagent.ameba.heytaxi;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -32,6 +33,7 @@ class SampleView extends View {
     Random r = new Random();
 
     CountDownGameOver count_over = new CountDownGameOver();
+    CountDestroyTaxi count_destroy = new CountDestroyTaxi();
     boolean detect_over;
 
     //複数のタクシー管理
@@ -65,6 +67,8 @@ class SampleView extends View {
         background = BitmapFactory.decodeResource(res, R.drawable.background_margin150);
         over = BitmapFactory.decodeResource(res, R.drawable.background_overwrite);
 
+        makeTaxi(-40);
+
         postInvalidate();
 
    }
@@ -82,19 +86,20 @@ class SampleView extends View {
             //描画処理
             c.drawBitmap(testtaxi, taxi.playerX, taxi.playerY, paint);
 
-            //死亡判定(仮)
-            if (taxi.playerY < 300) {
-
-
 //                Log.v("CHECK", "count_over[i] : " + count_over.count_over[i]);
                 if (detect_over){
                     //残り0(ゲームが終わる)になったときの処理
+                    Intent intent = new Intent(getContext(), ResultActivity.class);
+                    intent.putExtra("RESULT", count_destroy.count_destroy);
+                    getContext().startActivity(intent);
+
+
 //                    Log.v("CHECK", "GameEnd");
                 }else{
                     //それ以外(まだゲームが続く)のときの処理
 //                    Log.v("CHECK", "Continue");
                 }
-            }
+
 
         }
 
