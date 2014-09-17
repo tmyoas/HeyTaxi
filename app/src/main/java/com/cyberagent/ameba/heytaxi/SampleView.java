@@ -148,12 +148,10 @@ class SampleView extends View {
         paint.setAntiAlias(true);
 
         //台数カウントダウン表示
-        c.drawText("" + count_over.count_over[0], 55 + 0 * 142,100,paint);
-        c.drawText("" + count_over.count_over[1], 55 + 1 * 142,100,paint);
-        c.drawText("" + count_over.count_over[2], 55 + 2 * 142,100,paint);
-        c.drawText("" + count_over.count_over[3], 55 + 3 * 142,100,paint);
-        c.drawText("" + count_over.count_over[4], 55 + 4 * 142,100,paint);
 
+        for (int i=0; i < 5; i++) {
+            c.drawText("" + count_over.count_over[i], 55 + i * 142, 100, paint);
+        }
 
         //1000msに20回更新 => 50msごとに更新
         postInvalidateDelayed(1000 / fps);
@@ -184,7 +182,6 @@ class SampleView extends View {
         float y = ev.getY();
         switch (action& MotionEvent.ACTION_MASK ){
             case MotionEvent.ACTION_DOWN:
-                Log.d("TAG", " Touch ");//動作確認(済)
                 for(int i =0; i < taxies.size(); i++){
                     Taxi taxi = taxies.get(i);
                     float taxix = taxi.playerX;
@@ -192,7 +189,6 @@ class SampleView extends View {
                     float taxih = taxi.height;
                     float taxiw = taxi.width;
                     if (x >= taxix && x <= taxix + taxiw && y >= taxiy && y <= taxiy + taxih && y >150){
-                        Log.d("TAG", " ifTouch " );
                         taxi.playerVY = 0  ;
                         count_destroy.increment();
                         taxi.flag = true;
