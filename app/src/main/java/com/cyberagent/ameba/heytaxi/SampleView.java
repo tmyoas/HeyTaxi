@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.media.SoundPool;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -35,11 +36,13 @@ class SampleView extends View {
     CountDestroyTaxi count_destroy = new CountDestroyTaxi();
     boolean detect_over;
     //プレイヤーの初期化
-    TaxiSE taxise = new TaxiSE(this.getContext());
+    TaxiSE se = new TaxiSE(this.getContext());
+    int se0 = se.taxise[0];
+    int se1 = se.taxise[1];
+    int ser = se.taxise[r.nextInt(2)];
 
     //複数のタクシー管理
     ArrayList<Taxi> taxies = new ArrayList<Taxi>();
-
 @Override
     public void onWindowFocusChanged(boolean hasWindowFocus) {
         super.onWindowFocusChanged(hasWindowFocus);
@@ -198,7 +201,7 @@ class SampleView extends View {
                         taxi.playerVY = 0  ;
                         count_destroy.increment();
                         taxi.flag = true;
-                        taxise.playSe();
+                        se.playSe(r.nextInt(4));
                     }
 
                 }
