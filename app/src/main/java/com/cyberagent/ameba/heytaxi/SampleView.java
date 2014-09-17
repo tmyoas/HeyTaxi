@@ -34,6 +34,8 @@ class SampleView extends View {
     Random r = new Random();
     CountDownGameOver count_over = new CountDownGameOver();
     boolean detect_over;
+    //プレイヤーの初期化
+    TaxiSE taxise = new TaxiSE(this.getContext());
 
     //5つのレーンのX座標
 //    Taxi taxi = new Taxi(res, lane[r], playerVY);
@@ -105,9 +107,9 @@ class SampleView extends View {
 //            playerY = dispY;
 //            r = new java.util.Random ().nextInt (5);//            playerX = lane[r];//            playerX = lane[new Random().nextInt(5)];
 //        }
-            //描画処理
             if(taxi.flag){
                 c.drawBitmap(changedtaxi,taxi.playerX, taxi.playerY, paint);
+
                 taxi.deletecount -= 1;
                  if(taxi.deletecount == 0){
                      taxies.remove(i);
@@ -195,7 +197,6 @@ class SampleView extends View {
         float y = ev.getY();
         switch (action& MotionEvent.ACTION_MASK ){
             case MotionEvent.ACTION_DOWN:
-                Log.d("TAG", " Touch ");//動作確認(済)
                 for(int i =0; i < taxies.size(); i++){
                     Taxi taxi = taxies.get(i);
                     float taxix = taxi.playerX;
@@ -203,9 +204,9 @@ class SampleView extends View {
                     float taxih = taxi.height;
                     float taxiw = taxi.width;
                     if (x >= taxix && x <= taxix + taxiw && y >= taxiy && y <= taxiy + taxih && y >150){
-                        Log.d("TAG", " ifTouch " );
                         taxi.playerVY = 0  ;
                         taxi.flag = true;
+                        taxise.playSe();
                     }
 
                 }
