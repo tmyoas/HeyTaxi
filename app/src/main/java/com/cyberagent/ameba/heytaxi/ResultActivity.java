@@ -14,7 +14,7 @@ import android.widget.TextView;
 /**
  * Created by itou on 2014/09/17.
  */
-public class ResultActivity extends Activity {
+public class ResultActivity extends Activity implements View.OnClickListener{
 
     TextView text_count;
     Button button_title;
@@ -35,12 +35,9 @@ public class ResultActivity extends Activity {
         int result = intent.getIntExtra("RESULT", 0);
 
         text_count.setText("Count : " + result);
-        button_game.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
+        button_game.setOnClickListener(this);
+        button_title.setOnClickListener(this);
     }
 
     @Override
