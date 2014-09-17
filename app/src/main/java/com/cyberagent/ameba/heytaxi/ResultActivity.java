@@ -14,7 +14,9 @@ import android.widget.TextView;
 /**
  * Created by itou on 2014/09/17.
  */
-public class ResultActivity extends Activity {
+
+public class ResultActivity extends Activity implements View.OnClickListener{
+
 
     TextView text_count;
     Button button_title;
@@ -30,13 +32,14 @@ public class ResultActivity extends Activity {
         setContentView(R.layout.activity_result);
         init();
 
-        text_count.setText("Count : "  );
-        button_game.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
+        Intent intent = getIntent();
+        int result = intent.getIntExtra("RESULT", 0);
+
+
+        text_count.setText("タクシーを " + result + "台消しました！おめでとう！");
+        button_game.setOnClickListener(this);
+        button_title.setOnClickListener(this);
     }
 
     @Override
@@ -76,15 +79,13 @@ public class ResultActivity extends Activity {
         }
     }
 
-
-
     public void goGame(){
-        Intent intent = new Intent(this, com.cyberagent.ameba.heytaxi.MainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         this.startActivity(intent);
     }
 
     public void goTitle(){
-        Intent intent = new Intent(this, com.cyberagent.ameba.heytaxi.TitleActivity.class);
+        Intent intent = new Intent(this, TitleActivity.class);
         this.startActivity(intent);
     }
 }
