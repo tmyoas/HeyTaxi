@@ -10,13 +10,10 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-import android.view.View;
+
 import java.util.ArrayList;
 import java.util.Random;
-import android.os.Handler;
 
 /**
  * Created by misa0429 on 2014/09/11.
@@ -198,6 +195,7 @@ class SampleView extends View {
         }
         return false;
     }
+
 
 
 }
