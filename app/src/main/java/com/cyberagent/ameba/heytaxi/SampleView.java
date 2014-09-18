@@ -7,9 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.media.SoundPool;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -140,9 +138,12 @@ class SampleView extends View {
 
             if (detect_over) {
                 //残り0(ゲームが終わる)になったときの処理
-                Intent intent = new Intent(getContext(), ResultActivity.class);
-                intent.putExtra("RESULT", count_destroy.count_destroy);
-                getContext().startActivity(intent);
+//                Intent intent = new Intent(getContext(), ResultActivity.class);
+//                intent.putExtra("RESULT", count_destroy.count_destroy);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                getContext().startActivity(intent);
+
+                onTop();
 
             } else {
 
@@ -270,5 +271,11 @@ class SampleView extends View {
         return false;
     }
 
+    public void onTop() {
+        Intent intent = new Intent(getContext(), ResultActivity.class);
+        intent.putExtra("RESULT", count_destroy.count_destroy);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        getContext().startActivity(intent);
+    }
 
 }
