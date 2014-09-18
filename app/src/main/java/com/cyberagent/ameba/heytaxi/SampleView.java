@@ -107,7 +107,7 @@ class SampleView extends View {
                 }
                 //taxi1はtaxiの前にいること
                 if (taxi.lane == taxi1.lane && taxi.playerY > taxi1.playerY) {
-                    if (taxi.playerY - taxi1.playerY < takasa + 100) {
+                    if (taxi.playerY - taxi1.playerY < takasa + 80) {
                         taxi.lane += changeLane[taxi.lane][r.nextInt(2)];
                     }
                 }
@@ -115,12 +115,12 @@ class SampleView extends View {
                 for (Pato pato : patos) {
                     if (pato.lane == taxi.lane){
                         if (pato.playerY < taxi.playerY) {
-                            if (taxi.playerY - pato.playerY < takasa + 100) {
+                            if (taxi.playerY - pato.playerY < takasa + 80) {
                                 taxi.lane += changeLane[taxi.lane][r.nextInt(2)];
                             }
                         }
                         if (pato.playerY >= taxi.playerY) {
-                            if (pato.playerY - taxi.playerY < takasa +100) {
+                            if (pato.playerY - taxi.playerY < takasa +80) {
                                 taxi.lane += changeLane[taxi.lane][r.nextInt(2)];
                             }
                         }

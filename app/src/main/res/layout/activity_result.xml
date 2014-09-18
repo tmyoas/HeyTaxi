@@ -19,7 +19,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/image_game"
         android:src="@drawable/return_game_default"
-        android:layout_centerVertical="true"
+        android:layout_marginBottom="100dp"
+        android:layout_above="@+id/image_title"
         android:layout_alignLeft="@+id/image_title"
         android:layout_alignStart="@+id/image_title" />
 
@@ -27,11 +28,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/image_title"
-        android:layout_below="@+id/image_game"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
         android:src="@drawable/return_title_default"
-        android:longClickable="false" />
+        android:layout_marginBottom="50dp"
+        android:longClickable="false"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
     <ImageView
         android:layout_width="wrap_content"
