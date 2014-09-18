@@ -129,13 +129,7 @@ class SampleView extends View {
 
             if (detect_over) {
                 //残り0(ゲームが終わる)になったときの処理
-//                Intent intent = new Intent(getContext(), ResultActivity.class);
-//                intent.putExtra("RESULT", count_destroy.count_destroy);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                getContext().startActivity(intent);
-
                 onTop();
-
             } else {
 
             }
@@ -168,28 +162,6 @@ class SampleView extends View {
 
 
         }
-
-//        for (int j = 0; j > 0; j-- ){
-//            Taxi taxi = taxies.get(j);
-//            Taxi taxi1 = taxies.get(j+1);
-//
-//            if (taxi1.lane == taxi.lane){
-//                if (taxi1.playerY - taxi.playerY < testtaxi.getHeight() + 35) {
-//
-//                    if (taxi1.lane > 0 && taxi1.lane < 4){
-//
-//                        if (r.nextInt(2) == 0) {
-//                            taxi1.lane = taxi1.lane++;
-//                            taxi1.playerX = taxi1.playerX + 143;
-//                        } else {
-//                            taxi1.lane = taxi1.lane--;
-//                            taxi1.playerX = taxi1.playerX - 143;
-//                        }
-//                    }
-//
-//                }
-//            }
-//        }
 
         //タクシーが白背景の下を通るように
         c.drawBitmap(over, 0, 0, paint);
