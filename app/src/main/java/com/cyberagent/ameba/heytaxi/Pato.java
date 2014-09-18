@@ -10,7 +10,6 @@ import android.graphics.Paint;
 public class Pato {
 
     Paint paint = new Paint();
-    int playerX; //スタートのx座標
     int playerY = 1280;  //スタートのY座標
     int playerVY;  //y方向移動量
     Bitmap pato;
@@ -26,7 +25,6 @@ public class Pato {
     //コンストラクタ
     Pato( int lane, int playerVY){
         this.lane = lane;
-        this.playerX = 10 + lane * 142;
         this.playerVY = playerVY;
     }
 
