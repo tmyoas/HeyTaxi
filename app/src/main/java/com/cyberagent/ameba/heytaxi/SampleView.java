@@ -162,36 +162,20 @@ class SampleView extends View {
         patos.removeAll(removePatoList);
 
         //タクシーを4台まで生成する
-<<<<<<< HEAD
         if (taxies.size() < 10) {
-=======
-        if (taxies.size() < 50) {
->>>>>>> 708f6ce55dc0107dea307a3083f68399771c1b8c
 
             int i = new Random().nextInt(10);
             if (i == 1) {
-
-<<<<<<< HEAD
-                int speed = new java.util.Random().nextInt(40) + 20;
-=======
                 int speed = new java.util.Random().nextInt(40) + 40;
->>>>>>> 708f6ce55dc0107dea307a3083f68399771c1b8c
                 int playerVY = -speed;
-
                 makeTaxi(playerVY);
             }
         }
 
         if (patos.size() < 2) {
-<<<<<<< HEAD
             int j = new Random().nextInt(40);
             if (j == 20) {
                 makePato(-50);
-=======
-            int j = new Random().nextInt(30);
-            if (j == 1) {
-                makePato(-30);
->>>>>>> 708f6ce55dc0107dea307a3083f68399771c1b8c
             }
         }
 
@@ -262,7 +246,7 @@ class SampleView extends View {
                     float patow = pato.width;
                     if (x >= patox && x <= patox + patow && y >= patoy && y <= patoy + patoh && y > 150) {
                         pato.playerVY = 0;
-//                        pse.playSe();
+                        pse.playSe();
                         onTop();
                     }
                 }
