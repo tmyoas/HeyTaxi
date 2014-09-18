@@ -38,7 +38,7 @@ class SampleView extends View {
     boolean detect_over;
     //プレイヤーの初期化
     TaxiSE se = new TaxiSE(this.getContext());
-    boolean fl = false;
+    PatoSE pse = new PatoSE(this.getContext());
 
     //複数のタクシー管理
     ArrayList<Taxi> taxies = new ArrayList<Taxi>();
@@ -238,11 +238,7 @@ class SampleView extends View {
                         taxi.playerVY = 0;
                         count_destroy.increment();
                         taxi.flag = true;
-//                        se.playSe(r.nextInt(4));
-                        if (r.nextInt(1) == 0) {
-                            fl = true;
-                        }
-
+                        se.playSe(r.nextInt(4));
                     }
                 }
                 for(int j = 0; j < patos.size(); j++) {
@@ -252,9 +248,9 @@ class SampleView extends View {
                     float patoy = pato.playerY;
                     float patoh = pato.height;
                     float patow = pato.width;
-                    Log.d("TAG", "TOUCH!" + pato.playerX + pato.playerY);
                     if (x >= patox && x <= patox + patow && y >= patoy && y <= patoy + patoh && y > 150) {
                         pato.playerVY = 0;
+                        pse.playSe();
                         onTop();
                     }
                 }
