@@ -11,7 +11,7 @@ public class CountDownGameOver {
 
 
     CountDownGameOver () {
-        count_over =  30;
+        count_over = 10;
     }
 
 
