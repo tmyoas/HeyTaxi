@@ -23,7 +23,7 @@ import android.graphics.Paint;
     int dispX = 1080; //画面幅
     int lane ;
     boolean flag = false;
-    int deletecount = 20 ;
+    int deletecount = 10 ;
 
             //画像読み込みfrom SampleView  書き換え必要(constructor)
 //        private void init () {

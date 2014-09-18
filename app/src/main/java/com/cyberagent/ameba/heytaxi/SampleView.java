@@ -78,7 +78,7 @@ class SampleView extends View {
         over = BitmapFactory.decodeResource(res, R.drawable.background_overwrite);
         takasa = testtaxi.getHeight();
         makeTaxi(-20);
-        makePato(-10);
+        makePato(-50);
 
         postInvalidate();
 
@@ -87,7 +87,7 @@ class SampleView extends View {
     @Override
     public void onDraw(Canvas c) {
         //1000msに20回更新 => 50msごとに更新
-        postInvalidateDelayed(1000 / fps);
+        postInvalidateDelayed(800 / fps);
         removeTaxiList.clear();
         c.drawBitmap(background, 0, 0, paint);
 
@@ -100,11 +100,27 @@ class SampleView extends View {
                 }
                 //taxi1はtaxiの前にいること
                 if (taxi.lane == taxi1.lane && taxi.playerY > taxi1.playerY) {
-                    if (taxi.playerY - taxi1.playerY < takasa + 35) {
+                    if (taxi.playerY - taxi1.playerY < takasa + 70) {
                         taxi.lane += changeLane[taxi.lane][r.nextInt(2)];
                     }
                 }
+
+                for (Pato pato : patos) {
+                    if (pato.lane == taxi.lane){
+                        if (pato.playerY < taxi.playerY) {
+                            if (taxi.playerY - pato.playerY < takasa + 70) {
+                                taxi.lane += changeLane[taxi.lane][r.nextInt(2)];
+                            }
+                        }
+                        if (pato.playerY >= taxi.playerY) {
+                            if (pato.playerY - taxi.playerY < takasa +70) {
+                                taxi.lane += changeLane[taxi.lane][r.nextInt(2)];
+                            }
+                        }
+                    }
+                }
             }
+
 
             //描画処理
             if (taxi.flag) {
@@ -146,22 +162,22 @@ class SampleView extends View {
         patos.removeAll(removePatoList);
 
         //タクシーを4台まで生成する
-        if (taxies.size() < 5) {
+        if (taxies.size() < 10) {
 
-            int i = new Random().nextInt(40);
+            int i = new Random().nextInt(10);
             if (i == 1) {
 
-                int speed = new java.util.Random().nextInt(30) + 15;
+                int speed = new java.util.Random().nextInt(40) + 20;
                 int playerVY = -speed;
 
                 makeTaxi(playerVY);
             }
         }
 
-        if (patos.size() < 1) {
+        if (patos.size() < 2) {
             int j = new Random().nextInt(40);
-            if (j == 1) {
-                makePato(-10);
+            if (j == 20) {
+                makePato(-50);
             }
         }
 
@@ -220,7 +236,7 @@ class SampleView extends View {
                         taxi.playerVY = 0;
                         count_destroy.increment();
                         taxi.flag = true;
-//                        se.playSe(r.nextInt(4));
+                        se.playSe(r.nextInt(4));
                     }
                 }
                 for(int j = 0; j < patos.size(); j++) {
