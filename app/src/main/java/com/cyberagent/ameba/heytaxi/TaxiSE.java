@@ -10,6 +10,8 @@ import android.media.SoundPool;
 
 import java.util.ArrayList;
 
+import static android.media.SoundPool.*;
+
 public class TaxiSE
 {
     private SoundPool soundPool;
@@ -32,4 +34,5 @@ public class TaxiSE
         //soundPool.play(taxise[0], 1.0f, 1.0f, 1, 0, 1.0f);
         soundPool.play(taxise[index], 1.0f, 1.0f, 1, 0, 1.0f);
     }
+
 }

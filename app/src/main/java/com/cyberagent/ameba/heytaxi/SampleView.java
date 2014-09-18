@@ -139,7 +139,7 @@ class SampleView extends View {
             }
         }
 
-        for (Pato pato: patos){
+        for (Pato pato : patos) {
             pato.playerY += pato.playerVY;
             c.drawBitmap(patocar, 10 + pato.lane * 142, pato.playerY, paint);
         }
@@ -147,7 +147,7 @@ class SampleView extends View {
         //上についたタクシーを消す
         for (Taxi taxi : taxies) {
             if (taxi.playerY < 150 - testtaxi.getHeight()) {
-                detect_over = count_over.touchline(taxi.lane);
+                detect_over = count_over.touchline() ;
                 removeTaxiList.add(taxi);
             }
         }
@@ -188,9 +188,9 @@ class SampleView extends View {
 
         //台数カウントダウン表示
 
-        for (int i = 0; i < 5; i++) {
-            c.drawText("" + count_over.count_over[i], 55 + i * 142, 100, paint);
-        }
+//        for (int i = 0; i < 5; i++) {
+            c.drawText("" + count_over.count_over,  55  , 100, paint);
+//        }
 
 
     }
@@ -204,7 +204,6 @@ class SampleView extends View {
 
         taxies.add(taxi0);
     }
-
 
 
     public void makePato(int playerVY) {
@@ -235,9 +234,10 @@ class SampleView extends View {
                         count_destroy.increment();
                         taxi.flag = true;
                         se.playSe(r.nextInt(4));
+
                     }
                 }
-                for(int j = 0; j < patos.size(); j++) {
+                for (int j = 0; j < patos.size(); j++) {
                     Pato pato = patos.get(j);
 
                     float patox = 10 + pato.lane * 142;
@@ -246,20 +246,21 @@ class SampleView extends View {
                     float patow = pato.width;
                     if (x >= patox && x <= patox + patow && y >= patoy && y <= patoy + patoh && y > 150) {
                         pato.playerVY = 0;
-                        pse.playSe();
                         onTop();
                     }
-                }
 
-            break;
+                }
+                break;
         }
         return false;
     }
 
     public void onTop() {
         Intent intent = new Intent(getContext(), ResultActivity.class);
+        pse.playSe();
         intent.putExtra("RESULT", count_destroy.count_destroy);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         getContext().startActivity(intent);
     }
+
 }
