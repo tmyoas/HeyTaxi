@@ -193,6 +193,7 @@ class SampleView extends View {
             c.drawText("" + count_over.count_over[i], 55 + i * 142, 100, paint);
         }
 
+
     }
 
     //Taxiの生成
