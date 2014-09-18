@@ -102,7 +102,7 @@ class SampleView extends View {
                 }
                 //taxi1はtaxiの前にいること
                 if (taxi.lane == taxi1.lane && taxi.playerY > taxi1.playerY) {
-                    if (taxi.playerY - taxi1.playerY < 293 + 35) {
+                    if (taxi.playerY - taxi1.playerY < takasa + 35) {
                         taxi.lane += changeLane[taxi.lane][r.nextInt(2)];
                     }
                 }
