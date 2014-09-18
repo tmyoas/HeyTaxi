@@ -10,4 +10,8 @@
         android:scaleType="center"
         android:id="@+id/image_title"
         android:src="@drawable/title" />
+<<<<<<< HEAD
+=======
+
+>>>>>>> 980b6a7cea4784b74aafd36e4580c92f2f78ce75
 </LinearLayout>
