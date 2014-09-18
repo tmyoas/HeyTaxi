@@ -38,6 +38,13 @@ class SampleView extends View {
     //プレイヤーの初期化
     TaxiSE se = new TaxiSE(this.getContext());
     PatoSE pse = new PatoSE(this.getContext());
+    Bitmap num1;
+    Bitmap num2;
+    Bitmap num3;
+    Bitmap num4;
+    Bitmap num5;
+    Bitmap num6;
+
 
     //複数のタクシー管理
     ArrayList<Taxi> taxies = new ArrayList<Taxi>();
@@ -76,6 +83,7 @@ class SampleView extends View {
         patocar = BitmapFactory.decodeResource(res, R.drawable.pat_default);
         over = BitmapFactory.decodeResource(res, R.drawable.background_overwrite);
         takasa = testtaxi.getHeight();
+
         makeTaxi(-20);
         makePato(-50);
 
@@ -99,7 +107,7 @@ class SampleView extends View {
                 }
                 //taxi1はtaxiの前にいること
                 if (taxi.lane == taxi1.lane && taxi.playerY > taxi1.playerY) {
-                    if (taxi.playerY - taxi1.playerY < takasa + 70) {
+                    if (taxi.playerY - taxi1.playerY < takasa + 100) {
                         taxi.lane += changeLane[taxi.lane][r.nextInt(2)];
                     }
                 }
@@ -107,12 +115,12 @@ class SampleView extends View {
                 for (Pato pato : patos) {
                     if (pato.lane == taxi.lane){
                         if (pato.playerY < taxi.playerY) {
-                            if (taxi.playerY - pato.playerY < takasa + 70) {
+                            if (taxi.playerY - pato.playerY < takasa + 100) {
                                 taxi.lane += changeLane[taxi.lane][r.nextInt(2)];
                             }
                         }
                         if (pato.playerY >= taxi.playerY) {
-                            if (pato.playerY - taxi.playerY < takasa +70) {
+                            if (pato.playerY - taxi.playerY < takasa +100) {
                                 taxi.lane += changeLane[taxi.lane][r.nextInt(2)];
                             }
                         }
@@ -161,9 +169,9 @@ class SampleView extends View {
         patos.removeAll(removePatoList);
 
         //タクシーを4台まで生成する
-        if (taxies.size() < 10) {
+        if (taxies.size() < 6) {
 
-            int i = new Random().nextInt(10);
+            int i = new Random().nextInt(20);
             if (i == 1) {
                 int speed = new java.util.Random().nextInt(40) + 40;
                 int playerVY = -speed;
@@ -171,7 +179,7 @@ class SampleView extends View {
             }
         }
 
-        if (patos.size() < 2) {
+        if (patos.size() < 1) {
             int j = new Random().nextInt(40);
             if (j == 20) {
                 makePato(-50);
@@ -191,6 +199,9 @@ class SampleView extends View {
 //        for (int i = 0; i < 5; i++) {
             c.drawText("" + count_over.count_over,  55  , 100, paint);
 //        }
+
+        c.drawText("消したタクシー台数" + count_destroy.count_destroy, 200 , 100, paint);
+
 
     }
 
