@@ -29,10 +29,10 @@ class SampleView extends View {
     Bitmap background;
     Bitmap over;
     Bitmap changedtaxi;
+    Bitmap patocar;
     long fps = 20; //fps
     Random r = new Random();
     int takasa;
-
     CountDownGameOver count_over = new CountDownGameOver();
     CountDestroyTaxi count_destroy = new CountDestroyTaxi();
     boolean detect_over;
@@ -41,6 +41,8 @@ class SampleView extends View {
     int se0 = se.taxise[0];
     int se1 = se.taxise[1];
     int ser = se.taxise[r.nextInt(2)];
+    boolean fl = false;
+    Pato pato = new Pato(r.nextInt(5), -35);
 
     //複数のタクシー管理
     ArrayList<Taxi> taxies = new ArrayList<Taxi>();
@@ -72,6 +74,7 @@ class SampleView extends View {
         testtaxi = BitmapFactory.decodeResource(res, R.drawable.taxi_default);
         changedtaxi = BitmapFactory.decodeResource(res, R.drawable.taxi_crash);
         background = BitmapFactory.decodeResource(res, R.drawable.background_margin150);
+        patocar = BitmapFactory.decodeResource(res, R.drawable.pat_default);
         over = BitmapFactory.decodeResource(res, R.drawable.background_overwrite);
         takasa = testtaxi.getHeight();
         makeTaxi(-20);
@@ -82,15 +85,22 @@ class SampleView extends View {
 
     @Override
     public void onDraw(Canvas c) {
+
         //1000msに20回更新 => 50msごとに更新\
         postInvalidateDelayed(1000 / fps);
-
 
         c.drawBitmap(background, 0, 0, paint);
 
 
+        if(fl){
+            Log.d("TAG","pato_make");
+            pato.playerY += pato.playerVY;
+            c.drawBitmap(patocar, pato.playerX, pato.playerY, paint);
+        }
+
         for (int i = 0; i < taxies.size(); i++) {
             Taxi taxi = taxies.get(i);
+
             //数値処理
             taxi.playerY += taxi.playerVY;
 
@@ -124,7 +134,6 @@ class SampleView extends View {
                 if (taxi.deletecount == 0) {
                     taxies.remove(i);
                 }
-
             } else {
                 c.drawBitmap(testtaxi, taxi.playerX, taxi.playerY, paint);
             }
@@ -150,6 +159,14 @@ class SampleView extends View {
                 detect_over = count_over.touchline(taxi.lane);
                 removeTaxi(taxi);
             }
+        }
+
+        if (pato.playerY < 150 - 293){
+            fl = false;
+            pato.playerY = 1280;
+            pato.lane = r.nextInt(5);
+            pato.playerX = 10 + pato.lane * 142;
+
         }
 
         //タクシーを4台まで生成する
@@ -204,9 +221,6 @@ class SampleView extends View {
             c.drawText("" + count_over.count_over[i], 55 + i * 142, 100, paint);
         }
 
-        //1000msに20回更新 => 50msごとに更新
-        postInvalidateDelayed(1000 / fps);
-
     }
 
     //Taxiの生成
@@ -235,6 +249,7 @@ class SampleView extends View {
             case MotionEvent.ACTION_DOWN:
                 for (int i = 0; i < taxies.size(); i++) {
                     Taxi taxi = taxies.get(i);
+                    Pato pato = new Pato(r.nextInt(5), 15);
                     float taxix = taxi.playerX;
                     float taxiy = taxi.playerY;
                     float taxih = taxi.height;
@@ -243,7 +258,11 @@ class SampleView extends View {
                         taxi.playerVY = 0;
                         count_destroy.increment();
                         taxi.flag = true;
-                        se.playSe(r.nextInt(4));
+//                        se.playSe(r.nextInt(4));
+                        if(r.nextInt(1) == 0){
+                            Log.d("TAG","TOUCH!");
+                            fl = true ;
+                        }
                     }
 
                 }
