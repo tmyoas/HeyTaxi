@@ -1,34 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="#ffffff">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Count : 0"
-        android:id="@+id/result"
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitStart"
+        android:id="@+id/result_bg"
+        android:src="@drawable/result_background"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <Button
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Return Game"
-        android:id="@+id/button_game"
-        android:layout_below="@+id/result"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="60dp" />
+        android:id="@+id/image_game"
+        android:src="@drawable/return_game_default"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
-    <Button
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Return Title"
-        android:id="@+id/button_title"
-        android:layout_below="@+id/button_game"
+        android:id="@+id/image_title"
+        android:layout_below="@+id/image_game"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:src="@drawable/return_title_default"
+        android:longClickable="false" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/result_num3"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="60dp" />
+        android:layout_marginLeft="210dp"
+        android:src="@drawable/num_0" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/result_num2"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/result_num3"
+        android:src="@drawable/num_0" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/result_num1"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/result_num2"
+        android:src="@drawable/num_0" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/result_num0"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/result_num1"
+        android:src="@drawable/num_0" />
+
+
 </RelativeLayout>
