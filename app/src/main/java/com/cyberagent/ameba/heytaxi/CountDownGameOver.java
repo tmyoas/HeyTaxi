@@ -6,24 +6,24 @@ package com.cyberagent.ameba.heytaxi;
 public class CountDownGameOver {
 
 //    int[] count_over = new int[]{5, 5, 5, 5, 5};
-    int[] count_over = new int[5];
+    int  count_over =  5;
     boolean gameend;
 
 
     CountDownGameOver () {
-        count_over = new int[]{5, 5, 5, 5, 5};
+        count_over =  5;
     }
 
 
 
 
     //タクシーがタッチされないまま画面上端に到達したときの処理
-    public boolean touchline(int lane){
+    public boolean touchline(){
         //呼び出されたとき対応したlaneの残り台数を減らす
-        count_over[lane] -= 1;
+        count_over -= 1;
 
         //ゲーム終了の判定
-        switch (count_over[lane]){
+        switch (count_over){
             case 0:
                 gameend = true;
             break;
