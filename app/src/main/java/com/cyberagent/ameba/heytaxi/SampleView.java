@@ -7,9 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.media.SoundPool;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -46,8 +44,7 @@ class SampleView extends View {
     //複数のタクシー管理
     ArrayList<Taxi> taxies = new ArrayList<Taxi>();
     List<Taxi> removeTaxiList = new ArrayList<Taxi>();
-    int [] [] changeLane = {{1, 1}, {-1, 1}, {-1, 1}, {-1, 1}, {-1, -1}};
-
+    int[][] changeLane = {{1, 1}, {-1, 1}, {-1, 1}, {-1, 1}, {-1, -1}};
 
 
     @Override
@@ -95,15 +92,15 @@ class SampleView extends View {
         c.drawBitmap(background, 0, 0, paint);
 
 
-        for (Taxi taxi: taxies) {
+        for (Taxi taxi : taxies) {
             //数値処理
             taxi.playerY += taxi.playerVY;
 
-            for (Taxi taxi1: taxies) {
-                if (taxi1.equals(taxi)){
+            for (Taxi taxi1 : taxies) {
+                if (taxi1.equals(taxi)) {
                     continue;
                 }
-             //taxi1はtaxiの前にいること
+                //taxi1はtaxiの前にいること
                 if (taxi.lane == taxi1.lane && taxi.playerY > taxi1.playerY) {
                     if (taxi.playerY - taxi1.playerY < 293 + 35) {
                         taxi.lane += changeLane[taxi.lane][r.nextInt(2)];
@@ -125,19 +122,17 @@ class SampleView extends View {
 
             if (detect_over) {
                 //残り0(ゲームが終わる)になったときの処理
-                Intent intent = new Intent(getContext(), ResultActivity.class);
-                intent.putExtra("RESULT", count_destroy.count_destroy);
-                getContext().startActivity(intent);
+                onTop();
 
             } else {
             }
         }
 
         //上についたタクシーを消す
-        for (Taxi taxi: taxies) {
+        for (Taxi taxi : taxies) {
             if (taxi.playerY < 150 - testtaxi.getHeight()) {
                 detect_over = count_over.touchline(taxi.lane);
-                removeTaxiList.add (taxi);
+                removeTaxiList.add(taxi);
             }
         }
         taxies.removeAll(removeTaxiList);
@@ -208,5 +203,13 @@ class SampleView extends View {
                 }
         }
         return false;
+    }
+
+
+    public void onTop() {
+        Intent intent = new Intent(getContext(), ResultActivity.class);
+        intent.putExtra("RESULT", count_destroy.count_destroy);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        getContext().startActivity(intent);
     }
 }
