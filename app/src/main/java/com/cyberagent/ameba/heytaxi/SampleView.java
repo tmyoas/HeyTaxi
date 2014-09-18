@@ -38,13 +38,6 @@ class SampleView extends View {
     //プレイヤーの初期化
     TaxiSE se = new TaxiSE(this.getContext());
     PatoSE pse = new PatoSE(this.getContext());
-    Bitmap num1;
-    Bitmap num2;
-    Bitmap num3;
-    Bitmap num4;
-    Bitmap num5;
-    Bitmap num6;
-
 
     //複数のタクシー管理
     ArrayList<Taxi> taxies = new ArrayList<Taxi>();
@@ -111,23 +104,20 @@ class SampleView extends View {
                         taxi.lane += changeLane[taxi.lane][r.nextInt(2)];
                     }
                 }
-
-                for (Pato pato : patos) {
-                    if (pato.lane == taxi.lane){
-                        if (pato.playerY < taxi.playerY) {
-                            if (taxi.playerY - pato.playerY < takasa + 80) {
-                                taxi.lane += changeLane[taxi.lane][r.nextInt(2)];
-                            }
+            }
+            for (Pato pato : patos) {
+                if (pato.lane == taxi.lane){
+                    if (pato.playerY < taxi.playerY) {
+                        if (taxi.playerY - pato.playerY < takasa + 80) {
+                            taxi.lane += changeLane[taxi.lane][r.nextInt(2)];
                         }
-                        if (pato.playerY >= taxi.playerY) {
-                            if (pato.playerY - taxi.playerY < takasa +80) {
-                                taxi.lane += changeLane[taxi.lane][r.nextInt(2)];
-                            }
+                    } else {
+                        if (pato.playerY - taxi.playerY < takasa +80) {
+                            taxi.lane += changeLane[taxi.lane][r.nextInt(2)];
                         }
                     }
                 }
             }
-
 
             //描画処理
             if (taxi.flag) {
@@ -194,10 +184,11 @@ class SampleView extends View {
         paint.setTextSize(72);
         paint.setAntiAlias(true);
 
-        //台数カウントダウン表示
-            c.drawText("" + count_over.count_over,  55  , 100, paint);
 
-        c.drawText("消したタクシー台数" + count_destroy.count_destroy, 200 , 100, paint);
+        //台数カウントダウン表示
+            c.drawText("残:" + count_over.count_over,  55  , 100, paint);
+
+        c.drawText("消:" + count_destroy.count_destroy, 350 , 100, paint);
 
 
     }
