@@ -12,7 +12,6 @@ import android.graphics.Paint;
 
     Paint paint = new Paint();
     //スタートのY座標    int playerVY = -10;  //上に10ずつ動く
-    int playerX; //スタートのx座標
     int playerY = 1280;  //スタートのY座標
     int playerVY;  //y方向移動量
     Bitmap taxi;
@@ -24,7 +23,7 @@ import android.graphics.Paint;
     int dispX = 1080; //画面幅
     int lane ;
     boolean flag = false;
-    int deletecount = 20 ;
+    int deletecount = 10 ;
 
             //画像読み込みfrom SampleView  書き換え必要(constructor)
 //        private void init () {
@@ -38,7 +37,6 @@ import android.graphics.Paint;
     //コンストラクタ
     Taxi( int lane, int playerVY){
             this.lane = lane;
-            this.playerX = 10 + lane * 142;
             this.playerVY = playerVY;
         }
 

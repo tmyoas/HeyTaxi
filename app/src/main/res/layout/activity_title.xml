@@ -8,6 +8,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="center"
+<<<<<<< HEAD
         android:id="@+id/title_bg"
         android:src="@drawable/kakkokari" />
+=======
+        android:id="@+id/image_title"
+        android:src="@drawable/title" />
+>>>>>>> ebb2a98fa91dd6a66d2d9647d6876cd49e416de9
 </LinearLayout>

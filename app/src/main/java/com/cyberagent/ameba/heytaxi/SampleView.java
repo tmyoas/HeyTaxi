@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -27,21 +28,23 @@ class SampleView extends View {
     Bitmap background;
     Bitmap over;
     Bitmap changedtaxi;
+    Bitmap patocar;
     long fps = 20; //fps
     Random r = new Random();
     int takasa;
-
     CountDownGameOver count_over = new CountDownGameOver();
     CountDestroyTaxi count_destroy = new CountDestroyTaxi();
     boolean detect_over;
     //プレイヤーの初期化
     TaxiSE se = new TaxiSE(this.getContext());
-    int se0 = se.taxise[0];
-    int se1 = se.taxise[1];
-    int ser = se.taxise[r.nextInt(2)];
+    PatoSE pse = new PatoSE(this.getContext());
 
     //複数のタクシー管理
     ArrayList<Taxi> taxies = new ArrayList<Taxi>();
+    ArrayList<Pato> patos = new ArrayList<Pato>();
+    List<Taxi> removeTaxiList = new ArrayList<Taxi>();
+    List<Pato> removePatoList = new ArrayList<Pato>();
+    int[][] changeLane = {{1, 1}, {-1, 1}, {-1, 1}, {-1, 1}, {-1, -1}};
 
     @Override
     public void onWindowFocusChanged(boolean hasWindowFocus) {
@@ -70,9 +73,11 @@ class SampleView extends View {
         testtaxi = BitmapFactory.decodeResource(res, R.drawable.taxi_default);
         changedtaxi = BitmapFactory.decodeResource(res, R.drawable.taxi_crash);
         background = BitmapFactory.decodeResource(res, R.drawable.background_margin150);
+        patocar = BitmapFactory.decodeResource(res, R.drawable.pat_default);
         over = BitmapFactory.decodeResource(res, R.drawable.background_overwrite);
         takasa = testtaxi.getHeight();
         makeTaxi(-20);
+        makePato(-50);
 
         postInvalidate();
 
@@ -80,87 +85,97 @@ class SampleView extends View {
 
     @Override
     public void onDraw(Canvas c) {
-        //1000msに20回更新 => 50msごとに更新\
-        postInvalidateDelayed(1000 / fps);
-
-
+        //1000msに20回更新 => 50msごとに更新
+        postInvalidateDelayed(800 / fps);
+        removeTaxiList.clear();
         c.drawBitmap(background, 0, 0, paint);
 
-
-        for (int i = 0; i < taxies.size(); i++) {
-            Taxi taxi = taxies.get(i);
+        for (Taxi taxi : taxies) {
             //数値処理
             taxi.playerY += taxi.playerVY;
+            for (Taxi taxi1 : taxies) {
+                if (taxi1.equals(taxi)) {
+                    continue;
+                }
+                //taxi1はtaxiの前にいること
+                if (taxi.lane == taxi1.lane && taxi.playerY > taxi1.playerY) {
+                    if (taxi.playerY - taxi1.playerY < takasa + 70) {
+                        taxi.lane += changeLane[taxi.lane][r.nextInt(2)];
+                    }
+                }
 
-
-            //        for eachに変更必要
-            for (int j = i - 1; j >= 0; j--) {
-                Taxi taxi1 = taxies.get(j);
-                if (taxi.lane == taxi1.lane) {
-
-                    if (taxi.playerY - taxi1.playerY < 293 + 35) {
-//math 関数使う
-                        if (taxi.lane > 0 && taxi.lane < 4) {
-
-                            if (r.nextInt(2) == 0) {
-                                taxi.lane++;
-                                taxi.playerX += 143;
-                            } else {
-                                taxi.lane--;
-                                taxi.playerX -= 143;
+                for (Pato pato : patos) {
+                    if (pato.lane == taxi.lane){
+                        if (pato.playerY < taxi.playerY) {
+                            if (taxi.playerY - pato.playerY < takasa + 70) {
+                                taxi.lane += changeLane[taxi.lane][r.nextInt(2)];
                             }
                         }
-
+                        if (pato.playerY >= taxi.playerY) {
+                            if (pato.playerY - taxi.playerY < takasa +70) {
+                                taxi.lane += changeLane[taxi.lane][r.nextInt(2)];
+                            }
+                        }
                     }
                 }
             }
 
+
             //描画処理
             if (taxi.flag) {
-                c.drawBitmap(changedtaxi, taxi.playerX, taxi.playerY, paint);
+                c.drawBitmap(changedtaxi, 10 + taxi.lane * 142, taxi.playerY, paint);
                 taxi.deletecount -= 1;
                 if (taxi.deletecount == 0) {
-                    taxies.remove(i);
+                    removeTaxiList.add(taxi);
                 }
-
             } else {
-                c.drawBitmap(testtaxi, taxi.playerX, taxi.playerY, paint);
+                c.drawBitmap(testtaxi, 10 + taxi.lane * 142, taxi.playerY, paint);
             }
 
             if (detect_over) {
                 //残り0(ゲームが終わる)になったときの処理
                 onTop();
             } else {
-
             }
-
-
         }
 
-        //上についたタクシーを消す  for eachに変更必要
-        for (int i = 0; i < taxies.size(); i++) {
-            Taxi taxi = taxies.get(i);
+        for (Pato pato: patos){
+            pato.playerY += pato.playerVY;
+            c.drawBitmap(patocar, 10 + pato.lane * 142, pato.playerY, paint);
+        }
 
+        //上についたタクシーを消す
+        for (Taxi taxi : taxies) {
             if (taxi.playerY < 150 - testtaxi.getHeight()) {
                 detect_over = count_over.touchline(taxi.lane);
-                removeTaxi(taxi);
+                removeTaxiList.add(taxi);
+            }
+        }
+        taxies.removeAll(removeTaxiList);
+
+        for (Pato pato : patos) {
+            if (pato.playerY < 150 - testtaxi.getHeight()) {
+                removePatoList.add(pato);
+            }
+        }
+        patos.removeAll(removePatoList);
+
+        //タクシーを4台まで生成する
+        if (taxies.size() < 10) {
+
+            int i = new Random().nextInt(10);
+            if (i == 1) {
+                int speed = new java.util.Random().nextInt(40) + 40;
+                int playerVY = -speed;
+                makeTaxi(playerVY);
             }
         }
 
-        //タクシーを4台まで生成する
-        if (taxies.size() < 5) {
-
-            int i = new Random().nextInt(40);
-
-            if (i == 1) {
-
-                int speed = new java.util.Random().nextInt(30) + 5;
-                int playerVY = -speed;
-
-                makeTaxi(playerVY);
+        if (patos.size() < 2) {
+            int j = new Random().nextInt(40);
+            if (j == 20) {
+                makePato(-50);
             }
-
-
         }
 
         //タクシーが白背景の下を通るように
@@ -177,9 +192,6 @@ class SampleView extends View {
             c.drawText("" + count_over.count_over[i], 55 + i * 142, 100, paint);
         }
 
-        //1000msに20回更新 => 50msごとに更新
-        postInvalidateDelayed(1000 / fps);
-
     }
 
     //Taxiの生成
@@ -190,14 +202,19 @@ class SampleView extends View {
         taxi0.width = testtaxi.getWidth();
 
         taxies.add(taxi0);
-
     }
 
-    //配列からtaxiを消す
-    public void removeTaxi(Taxi taxi) {
-        taxies.remove(taxi);
 
+
+    public void makePato(int playerVY) {
+
+        Pato pato0 = new Pato(r.nextInt(5), playerVY);
+        pato0.height = testtaxi.getHeight();
+        pato0.width = testtaxi.getWidth();
+
+        patos.add(pato0);
     }
+
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
@@ -208,7 +225,7 @@ class SampleView extends View {
             case MotionEvent.ACTION_DOWN:
                 for (int i = 0; i < taxies.size(); i++) {
                     Taxi taxi = taxies.get(i);
-                    float taxix = taxi.playerX;
+                    float taxix = 10 + taxi.lane * 142;
                     float taxiy = taxi.playerY;
                     float taxih = taxi.height;
                     float taxiw = taxi.width;
@@ -218,8 +235,22 @@ class SampleView extends View {
                         taxi.flag = true;
                         se.playSe(r.nextInt(4));
                     }
-
                 }
+                for(int j = 0; j < patos.size(); j++) {
+                    Pato pato = patos.get(j);
+
+                    float patox = 10 + pato.lane * 142;
+                    float patoy = pato.playerY;
+                    float patoh = pato.height;
+                    float patow = pato.width;
+                    if (x >= patox && x <= patox + patow && y >= patoy && y <= patoy + patoh && y > 150) {
+                        pato.playerVY = 0;
+                        pse.playSe();
+                        onTop();
+                    }
+                }
+
+            break;
         }
         return false;
     }
@@ -230,5 +261,4 @@ class SampleView extends View {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         getContext().startActivity(intent);
     }
-
 }
