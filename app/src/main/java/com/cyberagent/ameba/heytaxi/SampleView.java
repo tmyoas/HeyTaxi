@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -42,6 +43,8 @@ class SampleView extends View {
     //複数のタクシー管理
     ArrayList<Taxi> taxies = new ArrayList<Taxi>();
     ArrayList<Pato> patos = new ArrayList<Pato>();
+    List<Taxi> removeTaxiList = new ArrayList<Taxi>();
+    int[][] changeLane = {{1, 1}, {-1, 1}, {-1, 1}, {-1, 1}, {-1, -1}};
 
     @Override
     public void onWindowFocusChanged(boolean hasWindowFocus) {
@@ -84,26 +87,36 @@ class SampleView extends View {
     public void onDraw(Canvas c) {
         //1000msに20回更新 => 50msごとに更新
         postInvalidateDelayed(1000 / fps);
+        removeTaxiList.clear();
         c.drawBitmap(background, 0, 0, paint);
 //            pato.playerY += pato.playerVY;
 //        if(fl){
 //            c.drawBitmap(patocar, pato.playerX, pato.playerY, paint);
 //        }
 
-        for (int i = 0; i < taxies.size(); i++) {
-            Taxi taxi = taxies.get(i);
+        for (Taxi taxi : taxies) {
             //数値処理
             taxi.playerY += taxi.playerVY;
-
+            for (Taxi taxi1 : taxies) {
+                if (taxi1.equals(taxi)) {
+                    continue;
+                }
+                //taxi1はtaxiの前にいること
+                if (taxi.lane == taxi1.lane && taxi.playerY > taxi1.playerY) {
+                    if (taxi.playerY - taxi1.playerY < 293 + 35) {
+                        taxi.lane += changeLane[taxi.lane][r.nextInt(2)];
+                    }
+                }
+            }
             //描画処理
             if (taxi.flag) {
-                c.drawBitmap(changedtaxi, taxi.playerX, taxi.playerY, paint);
+                c.drawBitmap(changedtaxi, 10 + taxi.lane * 142, taxi.playerY, paint);
                 taxi.deletecount -= 1;
                 if (taxi.deletecount == 0) {
-                    taxies.remove(i);
+                    removeTaxiList.add(taxi);
                 }
             } else {
-                c.drawBitmap(testtaxi, taxi.playerX, taxi.playerY, paint);
+                c.drawBitmap(testtaxi, 10 + taxi.lane * 142, taxi.playerY, paint);
             }
             for (int j = 0; j < patos.size(); j++){
             Pato pato = patos.get(j);
@@ -112,22 +125,22 @@ class SampleView extends View {
             }
 
             if (detect_over) {
+                //残り0(ゲームが終わる)になったときの処理
+
                 onTop();
             } else {
             }
-
-
         }
 
-        //上についたタクシーを消す  for eachに変更必要
-        for (int i = 0; i < taxies.size(); i++) {
-            Taxi taxi = taxies.get(i);
-
+        //上についたタクシーを消す
+        for (Taxi taxi : taxies) {
             if (taxi.playerY < 150 - testtaxi.getHeight()) {
                 detect_over = count_over.touchline(taxi.lane);
-                removeTaxi(taxi);
+                removeTaxiList.add(taxi);
             }
         }
+        taxies.removeAll(removeTaxiList);
+
 
         for (int i = 0; i < patos.size(); i++) {
             Pato pato = patos.get(i);
@@ -161,8 +174,6 @@ class SampleView extends View {
 
                 makeTaxi(playerVY);
             }
-
-
         }
 
         //タクシーが白背景の下を通るように
@@ -219,7 +230,7 @@ class SampleView extends View {
             case MotionEvent.ACTION_DOWN:
                 for (int i = 0; i < taxies.size(); i++) {
                     Taxi taxi = taxies.get(i);
-                    float taxix = taxi.playerX;
+                    float taxix = 10 + taxi.lane * 142;
                     float taxiy = taxi.playerY;
                     float taxih = taxi.height;
                     float taxiw = taxi.width;
@@ -253,11 +264,11 @@ class SampleView extends View {
         return false;
     }
 
+
     public void onTop() {
         Intent intent = new Intent(getContext(), ResultActivity.class);
         intent.putExtra("RESULT", count_destroy.count_destroy);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         getContext().startActivity(intent);
     }
-
 }

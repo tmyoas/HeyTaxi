@@ -12,7 +12,6 @@ import android.graphics.Paint;
 
     Paint paint = new Paint();
     //スタートのY座標    int playerVY = -10;  //上に10ずつ動く
-    int playerX; //スタートのx座標
     int playerY = 1280;  //スタートのY座標
     int playerVY;  //y方向移動量
     Bitmap taxi;
@@ -38,7 +37,6 @@ import android.graphics.Paint;
     //コンストラクタ
     Taxi( int lane, int playerVY){
             this.lane = lane;
-            this.playerX = 10 + lane * 142;
             this.playerVY = playerVY;
         }
 
