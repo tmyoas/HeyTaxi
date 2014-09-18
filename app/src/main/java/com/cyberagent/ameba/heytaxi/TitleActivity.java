@@ -50,6 +50,7 @@ public class TitleActivity extends Activity {
     public boolean onTouchEvent(MotionEvent ev){
 //        Intent intent = new Intent(this, com.cyberagent.ameba.heytaxi.MainActivity.class);
         Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         this.startActivity(intent);
         return false;
     }
