@@ -29,7 +29,7 @@ class SampleView extends View {
     Bitmap over;
     Bitmap changedtaxi;
     Bitmap patocar;
-    long fps = 20; //fps
+    long fps = 25; //fps
     Random r = new Random();
     int takasa;
     CountDownGameOver count_over = new CountDownGameOver();
@@ -86,7 +86,7 @@ class SampleView extends View {
     @Override
     public void onDraw(Canvas c) {
         //1000msに20回更新 => 50msごとに更新
-        postInvalidateDelayed(800 / fps);
+        postInvalidateDelayed(1000 / fps);
         removeTaxiList.clear();
         c.drawBitmap(background, 0, 0, paint);
 
@@ -187,11 +187,7 @@ class SampleView extends View {
         paint.setAntiAlias(true);
 
         //台数カウントダウン表示
-
-//        for (int i = 0; i < 5; i++) {
             c.drawText("" + count_over.count_over,  55  , 100, paint);
-//        }
-
 
     }
 
