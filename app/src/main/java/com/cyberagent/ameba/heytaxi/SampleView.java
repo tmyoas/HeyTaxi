@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -28,24 +29,22 @@ class SampleView extends View {
     Bitmap background;
     Bitmap over;
     Bitmap changedtaxi;
+    Bitmap patocar;
     long fps = 20; //fps
     Random r = new Random();
     int takasa;
-
     CountDownGameOver count_over = new CountDownGameOver();
     CountDestroyTaxi count_destroy = new CountDestroyTaxi();
     boolean detect_over;
     //プレイヤーの初期化
     TaxiSE se = new TaxiSE(this.getContext());
-    int se0 = se.taxise[0];
-    int se1 = se.taxise[1];
-    int ser = se.taxise[r.nextInt(2)];
+    boolean fl = false;
 
     //複数のタクシー管理
     ArrayList<Taxi> taxies = new ArrayList<Taxi>();
+    ArrayList<Pato> patos = new ArrayList<Pato>();
     List<Taxi> removeTaxiList = new ArrayList<Taxi>();
     int[][] changeLane = {{1, 1}, {-1, 1}, {-1, 1}, {-1, 1}, {-1, -1}};
-
 
     @Override
     public void onWindowFocusChanged(boolean hasWindowFocus) {
@@ -74,9 +73,11 @@ class SampleView extends View {
         testtaxi = BitmapFactory.decodeResource(res, R.drawable.taxi_default);
         changedtaxi = BitmapFactory.decodeResource(res, R.drawable.taxi_crash);
         background = BitmapFactory.decodeResource(res, R.drawable.background_margin150);
+        patocar = BitmapFactory.decodeResource(res, R.drawable.pat_default);
         over = BitmapFactory.decodeResource(res, R.drawable.background_overwrite);
         takasa = testtaxi.getHeight();
         makeTaxi(-20);
+        makePato(-10);
 
         postInvalidate();
 
@@ -84,18 +85,18 @@ class SampleView extends View {
 
     @Override
     public void onDraw(Canvas c) {
-        //1000msに20回更新 => 50msごとに更新\
+        //1000msに20回更新 => 50msごとに更新
         postInvalidateDelayed(1000 / fps);
-
         removeTaxiList.clear();
-
         c.drawBitmap(background, 0, 0, paint);
-
+//            pato.playerY += pato.playerVY;
+//        if(fl){
+//            c.drawBitmap(patocar, pato.playerX, pato.playerY, paint);
+//        }
 
         for (Taxi taxi : taxies) {
             //数値処理
             taxi.playerY += taxi.playerVY;
-
             for (Taxi taxi1 : taxies) {
                 if (taxi1.equals(taxi)) {
                     continue;
@@ -107,7 +108,6 @@ class SampleView extends View {
                     }
                 }
             }
-
             //描画処理
             if (taxi.flag) {
                 c.drawBitmap(changedtaxi, 10 + taxi.lane * 142, taxi.playerY, paint);
@@ -115,15 +115,19 @@ class SampleView extends View {
                 if (taxi.deletecount == 0) {
                     removeTaxiList.add(taxi);
                 }
-
             } else {
                 c.drawBitmap(testtaxi, 10 + taxi.lane * 142, taxi.playerY, paint);
+            }
+            for (int j = 0; j < patos.size(); j++){
+            Pato pato = patos.get(j);
+            pato.playerY += pato.playerVY;
+            c.drawBitmap(patocar, pato.playerX, pato.playerY, paint);
             }
 
             if (detect_over) {
                 //残り0(ゲームが終わる)になったときの処理
-                onTop();
 
+                onTop();
             } else {
             }
         }
@@ -137,6 +141,26 @@ class SampleView extends View {
         }
         taxies.removeAll(removeTaxiList);
 
+
+        for (int i = 0; i < patos.size(); i++) {
+            Pato pato = patos.get(i);
+
+            if (pato.playerY < 150 - testtaxi.getHeight()) {
+                patos.remove(i);
+            }
+        }
+
+        if (patos.size() < 1) {
+
+            int j = new Random().nextInt(40);
+
+            if (j == 1) {
+
+                int playerVY = -30;
+
+                makePato(playerVY);
+            }
+        }
 
         //タクシーを4台まで生成する
         if (taxies.size() < 5) {
@@ -166,9 +190,6 @@ class SampleView extends View {
             c.drawText("" + count_over.count_over[i], 55 + i * 142, 100, paint);
         }
 
-        //1000msに20回更新 => 50msごとに更新
-        postInvalidateDelayed(1000 / fps);
-
     }
 
     //Taxiの生成
@@ -179,6 +200,25 @@ class SampleView extends View {
         taxi0.width = testtaxi.getWidth();
 
         taxies.add(taxi0);
+
+    }
+
+
+
+    public void makePato(int playerVY) {
+
+        Pato pato0 = new Pato(r.nextInt(5), playerVY);
+        pato0.height = testtaxi.getHeight();
+        pato0.width = testtaxi.getWidth();
+
+        patos.add(pato0);
+    }
+
+
+    //配列からtaxiを消す
+    public void removeTaxi(Taxi taxi) {
+        taxies.remove(taxi);
+
     }
 
     @Override
@@ -198,9 +238,28 @@ class SampleView extends View {
                         taxi.playerVY = 0;
                         count_destroy.increment();
                         taxi.flag = true;
-                        se.playSe(r.nextInt(4));
+//                        se.playSe(r.nextInt(4));
+                        if (r.nextInt(1) == 0) {
+                            fl = true;
+                        }
+
                     }
                 }
+                for(int j = 0; j < patos.size(); j++) {
+                    Pato pato = patos.get(j);
+
+                    float patox = pato.playerX;
+                    float patoy = pato.playerY;
+                    float patoh = pato.height;
+                    float patow = pato.width;
+                    Log.d("TAG", "TOUCH!" + pato.playerX + pato.playerY);
+                    if (x >= patox && x <= patox + patow && y >= patoy && y <= patoy + patoh && y > 150) {
+                        pato.playerVY = 0;
+                        onTop();
+                    }
+                }
+
+
         }
         return false;
     }
