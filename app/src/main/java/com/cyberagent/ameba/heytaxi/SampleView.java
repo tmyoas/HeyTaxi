@@ -80,7 +80,7 @@ class SampleView extends View {
         testtaxi = BitmapFactory.decodeResource(res, R.drawable.taxi_default);
         changedtaxi = BitmapFactory.decodeResource(res, R.drawable.taxi_crash);
         background = BitmapFactory.decodeResource(res, R.drawable.background_margin150);
-        patocar = BitmapFactory.decodeResource(res, R.drawable.pat_default);
+        patocar = BitmapFactory.decodeResource(res, R.drawable.goodtaxi);
         over = BitmapFactory.decodeResource(res, R.drawable.background_overwrite);
         takasa = testtaxi.getHeight();
 
@@ -112,21 +112,23 @@ class SampleView extends View {
                     }
                 }
 
-                for (Pato pato : patos) {
-                    if (pato.lane == taxi.lane){
-                        if (pato.playerY < taxi.playerY) {
-                            if (taxi.playerY - pato.playerY < takasa + 80) {
+            }
+
+            for (Pato pato : patos) {
+                if (pato.lane == taxi.lane){
+                    if (pato.playerY < taxi.playerY) {
+                         if (taxi.playerY - pato.playerY < takasa + 80) {
                                 taxi.lane += changeLane[taxi.lane][r.nextInt(2)];
-                            }
-                        }
-                        if (pato.playerY >= taxi.playerY) {
-                            if (pato.playerY - taxi.playerY < takasa +80) {
+                         }
+                    }
+                    if (pato.playerY >= taxi.playerY) {
+                        if (pato.playerY - taxi.playerY < takasa +80) {
                                 taxi.lane += changeLane[taxi.lane][r.nextInt(2)];
-                            }
                         }
                     }
                 }
             }
+
 
 
             //描画処理
