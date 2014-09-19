@@ -20,6 +20,7 @@ import java.util.Random;
  */
 class SampleView extends View {
     Paint paint = new Paint();
+    Paint paint2 = new Paint();
     int playerY;  //スタートのY座標
     int dispX = 720; //画面幅
     int dispY = 1280;  //画面高さ
@@ -73,12 +74,12 @@ class SampleView extends View {
         testtaxi = BitmapFactory.decodeResource(res, R.drawable.taxi_default);
         changedtaxi = BitmapFactory.decodeResource(res, R.drawable.taxi_crash);
         background = BitmapFactory.decodeResource(res, R.drawable.background_margin150);
-        patocar = BitmapFactory.decodeResource(res, R.drawable.pat_default);
+        patocar = BitmapFactory.decodeResource(res, R.drawable.goodtaxi);
         over = BitmapFactory.decodeResource(res, R.drawable.background_overwrite);
         takasa = testtaxi.getHeight();
 
         makeTaxi(-20);
-        makePato(-50);
+        makePato(-40);
 
         postInvalidate();
 
@@ -158,7 +159,7 @@ class SampleView extends View {
         }
         patos.removeAll(removePatoList);
 
-        //タクシーを4台まで生成する
+        //タクシーを6台まで生成する
         if (taxies.size() < 6) {
 
             int i = new Random().nextInt(20);
@@ -172,7 +173,7 @@ class SampleView extends View {
         if (patos.size() < 1) {
             int j = new Random().nextInt(40);
             if (j == 20) {
-                makePato(-50);
+                makePato(-40);
             }
         }
 
@@ -184,11 +185,17 @@ class SampleView extends View {
         paint.setTextSize(72);
         paint.setAntiAlias(true);
 
+        paint2.setARGB(255, 0, 0, 0);
+        paint2.setTextSize(40);
+        paint2.setAntiAlias(true);
+
 
         //台数カウントダウン表示
-            c.drawText("残:" + count_over.count_over,  55  , 100, paint);
-
-        c.drawText("消:" + count_destroy.count_destroy, 350 , 100, paint);
+        c.drawText("得点：",  47  , 100, paint2);
+        c.drawText("" + count_destroy.count_destroy,  165  , 100, paint);
+        c.drawText("残り",  435  , 100, paint2);
+        c.drawText("" + count_over.count_over, 530  , 100, paint);
+        c.drawText("台",  590  , 100, paint2);
 
 
     }
